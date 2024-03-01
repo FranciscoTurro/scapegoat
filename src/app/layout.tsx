@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@/lib/auth/SessionProvider';
+import { authOptions } from '../lib/auth/authOptions';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
@@ -14,7 +15,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">

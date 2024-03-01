@@ -2,8 +2,11 @@
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { Button } from '../components/ui/button';
+import { unstable_noStore } from 'next/cache';
 
 const Home = () => {
+  unstable_noStore();
+
   const { data } = useSession();
 
   if (data?.user)
