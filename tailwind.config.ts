@@ -19,6 +19,12 @@ const config = {
     },
     extend: {
       colors: {
+        site_background: '#ece4ec',
+        site_menus: '#d5c9f0',
+        site_menus_hover: '#ddd3ef',
+        site_primary: '#5749f3',
+        site_primary_hover: '#7a62f6',
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

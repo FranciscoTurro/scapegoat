@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@/lib/auth/SessionProvider';
 import { authOptions } from '../lib/auth/authOptions';
-import { downloadImages, renameImageRoutes } from '../utils/populateDb';
+import { Navbar } from './_components/Navbar';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
@@ -21,7 +21,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
