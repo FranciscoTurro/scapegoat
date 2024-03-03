@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@/lib/auth/SessionProvider';
 import { authOptions } from '../lib/auth/authOptions';
-import { loadPrismaFromJSON } from '../providers/populateDb';
+import { downloadImages, renameImageRoutes } from '../utils/populateDb';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
