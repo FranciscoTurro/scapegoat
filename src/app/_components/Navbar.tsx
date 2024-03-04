@@ -14,7 +14,7 @@ export const Navbar = ({}) => {
 
   return (
     <nav className="border-b border-gray-200">
-      <div className="mx-auto w-full flex flex-row gap-6 container px-20 pt-4">
+      <div className="mx-auto w-full flex flex-row justify-evenly container px-20 pt-4">
         <a href="/">
           <Image
             priority={true}
@@ -24,7 +24,7 @@ export const Navbar = ({}) => {
             alt="Scapegoat Icon"
           />
         </a>
-        <div className="flex flex-row space-x-4 gap-2 h-12 items-center overflow-x-auto w-full">
+        <div className="flex flex-row space-x-4 gap-2 h-12 items-center overflow-x-auto">
           <a
             className="h-full relative flex items-center whitespace-nowrap"
             href="combos"
@@ -54,7 +54,6 @@ export const Navbar = ({}) => {
                   : 'text-gray-600 font-medium '
               } relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-primary rounded-md duration-200 hover:bg-gray-100`}
             >
-              {' '}
               <ShieldX />
               <span>Choke points</span>
             </div>

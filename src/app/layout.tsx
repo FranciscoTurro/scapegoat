@@ -23,7 +23,7 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session}>
           <Navbar />
-          {children}
+          <main className="flex w-full flex-1 flex-col">{children}</main>
         </SessionProvider>
       </body>
     </html>
