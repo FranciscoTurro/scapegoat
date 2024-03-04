@@ -18,6 +18,7 @@ export const UserButton = () => {
   if (!data || !data.user)
     return (
       <Button
+        className="text-white"
         onClick={() => {
           signIn();
         }}
@@ -40,7 +41,7 @@ export const UserButton = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>{`${data.user!.name}`}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+          <DropdownMenuSeparator className="bg-gray-200" />
           <DropdownMenuItem className="cursor-pointer">
             <LogOut className="mr-2 h-4 w-4" />
             <span
