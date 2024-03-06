@@ -2,6 +2,8 @@
 
 .env
 
+/public/cards
+
 # dependencies
 /node_modules
 /.pnp

@@ -46,16 +46,15 @@ export const loadPrismaFromJSON = async () => {
 export const downloadImages = async () => {
   const obj = JSON.parse(JSON.stringify(cards));
   const downloadFolder = 'D:\\scapegoat_images';
-  const delayBetweenRequests = 200;
+  const delayBetweenRequests = 150;
 
   if (!fs.existsSync(downloadFolder)) {
     fs.mkdirSync(downloadFolder);
   }
 
   for (const card of obj.data) {
-    const cardName = card.name.replace(/[^\w\s]/gi, '');
-    const fullImageName = `${cardName}.jpg`;
-    const smallImageName = `${cardName}_small.jpg`;
+    const fullImageName = `${card.id}.jpg`;
+    const smallImageName = `${card.id}_small.jpg`;
 
     await downloadImage(
       card.card_images[0].image_url,
@@ -81,8 +80,8 @@ export const renameImageRoutes = async () => {
       prisma.card.update({
         where: { id: card.id },
         data: {
-          full_image_path: `D:\\scapegoat_images\\${card.name}.jpg`,
-          small_image_path: `D:\\scapegoat_images\\${card.name}_small.jpg`,
+          full_image_path: `/cards/${card.id}.jpg`,
+          small_image_path: `/cards/${card.id}_small.jpg`,
         },
       })
     )

@@ -6,3 +6,10 @@ export const getCardsInfo = async () => {
     orderBy: { name: 'asc' },
   });
 };
+
+export const getCard = async (id: string) => {
+  return await prisma.card.findFirst({ where: { id } });
+};
+
+//TODO:
+//add new card to database

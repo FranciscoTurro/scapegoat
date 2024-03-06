@@ -6,15 +6,17 @@ import { Input } from '../../components/ui/input';
 import Link from 'next/link';
 import Image from 'next/image';
 
-interface CardNames {
+interface CardInfo {
   id: string;
   name: string;
   small_image_path: string;
 }
 
-export const Searchbar: React.FC<{ names: CardNames[] }> = ({ names }) => {
+export const Searchbar: React.FC<{ cards: CardInfo[] }> = ({
+  cards: names,
+}) => {
   const [inputValue, setInputValue] = useState('');
-  const [filteredItems, setFilteredItems] = useState<CardNames[]>([]);
+  const [filteredItems, setFilteredItems] = useState<CardInfo[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -50,48 +52,54 @@ export const Searchbar: React.FC<{ names: CardNames[] }> = ({ names }) => {
     setSelectedIndex(-1);
   };
 
-  const handleSuggestionClick = (suggestion: CardNames) => {
+  const handleSuggestionClick = (suggestion: CardInfo) => {
     setInputValue('');
     setFilteredItems([]);
     setSelectedIndex(-1);
   };
 
   return (
-    <div className="relative h-10 w-full">
-      <Search className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 z-10" />
-      <Input
-        ring={false}
-        ref={inputRef}
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Quick card search"
-        className="rounded-md border-gray-200 focus:border-primary flex h-10 border-2 bg-background px-3 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-3 py-2 text-md w-full"
-      />
-      {filteredItems.length > 0 && (
-        <ul className="absolute bg-background w-full z-10 border-x-2 border-b-2 border-primary rounded shadow-lg">
-          {filteredItems.map((item, index) => (
-            <div className="flex items-center" key={item.id}>
-              <Link href={`/card/${item.id}`}>
-                <li
-                  onClick={() => handleSuggestionClick(item)}
-                  className={`px-4 py-2 cursor-pointer hover:bg-gray-200/70 ${
-                    index === selectedIndex ? 'bg-gray-200/70' : ''
-                  }`}
+    <div className="container lg:px-20 w-full mx-auto flex flex-row items-center justify-center gap-4 pt-0 h-16 my-2">
+      <div className="relative h-10 w-4/6">
+        <Search className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 z-10" />
+        <Input
+          ring={false}
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Quick card search"
+          className="rounded-md border-gray-200 focus:border-primary flex h-10 border-2 bg-background px-3 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-3 py-2 text-md w-full"
+        />
+        {filteredItems.length > 0 && (
+          <ul className="absolute bg-background w-full z-10 border-x-2 border-b-2 border-primary rounded shadow-lg">
+            {filteredItems.map((item, index) => (
+              <div className="flex items-center " key={item.id}>
+                <Link
+                  className="hover:bg-gray-200/70  flex w-full"
+                  href={`/search/${item.id}`}
                 >
-                  {item.name}
-                </li>
-              </Link>
-              <Image
-                src={item.small_image_path}
-                width={20}
-                height={20}
-                alt={item.name}
-              />
-            </div>
-          ))}
-        </ul>
-      )}
+                  <li
+                    onClick={() => handleSuggestionClick(item)}
+                    className={`w-full px-4 py-2 cursor-pointer${
+                      index === selectedIndex ? 'bg-gray-200/70' : ''
+                    }`}
+                  >
+                    {item.name}
+                  </li>
+                  <Image
+                    className="w-auto"
+                    src={item.small_image_path}
+                    height={30}
+                    width={20}
+                    alt={item.name}
+                  />
+                </Link>
+              </div>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
