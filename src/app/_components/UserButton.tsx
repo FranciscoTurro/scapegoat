@@ -42,15 +42,12 @@ export const UserButton = () => {
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>{`${data.user!.name}`}</DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-gray-200" />
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => signOut()}
+            className="hover:bg-gray-200 cursor-pointer"
+          >
             <LogOut className="mr-2 h-4 w-4" />
-            <span
-              onClick={() => {
-                signOut();
-              }}
-            >
-              Log out
-            </span>
+            <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
