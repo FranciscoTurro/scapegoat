@@ -14,8 +14,8 @@ export const Navbar = ({}) => {
   const isSearch = pathname == '/search';
 
   return (
-    <nav className="border-b border-gray-200">
-      <div className="mx-auto w-full flex flex-row justify-evenly container px-20 pt-4">
+    <nav className="border-b border-border">
+      <div className="mx-auto w-full flex flex-row justify-evenly container px-20 pt-2">
         <Link href="/">
           <Image
             priority={true}
@@ -32,14 +32,14 @@ export const Navbar = ({}) => {
           >
             <div
               className={`${
-                isCombos ? 'text-primary' : 'text-gray-600'
-              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-primary rounded-md duration-200 hover:bg-gray-100`}
+                isCombos ? 'text-white' : 'text-gray-400'
+              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
             >
               <Joystick />
               <span>Combos</span>
             </div>
             {isCombos ? (
-              <span className="w-full h-0.5 bg-primary absolute bottom-0 left-0 rounded-full"></span>
+              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
             ) : null}
           </Link>
           <Link
@@ -48,14 +48,14 @@ export const Navbar = ({}) => {
           >
             <div
               className={`${
-                isChokePoints ? 'text-primary' : 'text-gray-600'
-              } font-medium  relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-primary rounded-md duration-200 hover:bg-gray-100`}
+                isChokePoints ? 'text-white' : 'text-gray-400'
+              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
             >
               <ShieldX />
               <span>Choke points</span>
             </div>
             {isChokePoints ? (
-              <span className="w-full h-0.5 bg-primary absolute bottom-0 left-0 rounded-full"></span>
+              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
             ) : null}
           </Link>
           <Link
@@ -64,14 +64,14 @@ export const Navbar = ({}) => {
           >
             <div
               className={`${
-                isSearch ? 'text-primary' : 'text-gray-600'
-              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-primary rounded-md duration-200 hover:bg-gray-100`}
+                isSearch ? 'text-white' : 'text-gray-400'
+              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
             >
               <Search />
               <span>Search cards</span>
             </div>
             {isSearch ? (
-              <span className="w-full h-0.5 bg-primary absolute bottom-0 left-0 rounded-full"></span>
+              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
             ) : null}
           </Link>
         </div>

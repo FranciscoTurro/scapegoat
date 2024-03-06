@@ -18,7 +18,7 @@ export const UserButton = () => {
   if (!data || !data.user)
     return (
       <Button
-        className="text-white"
+        className="bg-white hover:bg-white/90 text-black"
         onClick={() => {
           signIn();
         }}
@@ -31,7 +31,7 @@ export const UserButton = () => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="cursor-pointer">
+          <Avatar className="border-white border-2 cursor-pointer">
             <AvatarImage
               src={data.user.image!}
               alt={`${data.user.name}'s picture`}
@@ -39,12 +39,12 @@ export const UserButton = () => {
             <AvatarFallback>PFP</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
+        <DropdownMenuContent className="bg-black border-border w-56">
           <DropdownMenuLabel>{`${data.user!.name}`}</DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-gray-200" />
+          <DropdownMenuSeparator className="bg-border" />
           <DropdownMenuItem
             onClick={() => signOut()}
-            className="hover:bg-gray-200 cursor-pointer"
+            className="bg-black cursor-pointer"
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>

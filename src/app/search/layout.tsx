@@ -1,4 +1,4 @@
-import { Searchbar } from '../_components/Searchbar';
+import { Searchbar } from './_components/Searchbar';
 import { getCardsInfo } from '../../data-access/cards';
 
 const SearchLayout = async ({
@@ -9,10 +9,10 @@ const SearchLayout = async ({
   const cards = await getCardsInfo();
 
   return (
-    <div>
+    <>
       <Searchbar cards={cards} />
       {children}
-    </div>
+    </>
   );
 };
 

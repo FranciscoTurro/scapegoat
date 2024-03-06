@@ -1,5 +1,5 @@
 const ChokePage = () => {
-  return <div>Choke points</div>;
+  return <div>CHOKE POINTS PAGE</div>;
 };
 
 export default ChokePage;

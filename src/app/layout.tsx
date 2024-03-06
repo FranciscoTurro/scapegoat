@@ -4,12 +4,18 @@ import { getServerSession } from 'next-auth';
 import SessionProvider from '@/lib/auth/SessionProvider';
 import { authOptions } from '../lib/auth/authOptions';
 import { Navbar } from './_components/Navbar';
+import { Inter } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
   description: 'A Yu-Gi-Oh! assistant',
   icons: { icon: '/favicon.ico' },
 };
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 const RootLayout = async ({
   children,
@@ -23,7 +29,9 @@ const RootLayout = async ({
       <body>
         <SessionProvider session={session}>
           <Navbar />
-          <main className="flex w-full flex-1 flex-col">{children}</main>
+          <main className={`${inter.variable} flex w-full flex-1 flex-col`}>
+            {children}
+          </main>
         </SessionProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
 const CombosPage = () => {
-  return <div>Combos</div>;
+  return <div>COMBOS PAGE</div>;
 };
 
 export default CombosPage;
