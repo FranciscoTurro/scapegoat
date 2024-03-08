@@ -49,8 +49,8 @@ const config: Config = {
           foreground: '#ccc',
         },
         card: {
-          DEFAULT: '#555',
-          foreground: '#888',
+          DEFAULT: '#000',
+          foreground: '#fff',
         },
       },
       borderRadius: {

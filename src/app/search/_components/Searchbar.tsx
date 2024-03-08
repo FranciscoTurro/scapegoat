@@ -17,7 +17,6 @@ export const Searchbar: React.FC<{ cards: CardInfo[] }> = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [filteredItems, setFilteredItems] = useState<CardInfo[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -49,13 +48,11 @@ export const Searchbar: React.FC<{ cards: CardInfo[] }> = ({
       suggestion.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredItems(filteredSuggestions.slice(0, 10));
-    setSelectedIndex(-1);
   };
 
   const handleSuggestionClick = () => {
     setInputValue('');
     setFilteredItems([]);
-    setSelectedIndex(-1);
   };
 
   return (
