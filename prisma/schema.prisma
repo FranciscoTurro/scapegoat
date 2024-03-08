@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Card {
-  id               String  @id
+  id               String      @id
   name             String
   type             String
   desc             String
   atk              Int?
   def              Int?
   level            Int?
-  attribute        String?
-  race             String
+  attribute        Attributes?
+  race             Types
   full_image_path  String
   small_image_path String
 }
@@ -70,4 +70,49 @@ model VerificationToken {
 enum UserRole {
   admin
   user
+}
+
+enum Attributes {
+  DARK
+  LIGHT
+  FIRE
+  WATER
+  EARTH
+  WIND
+  DIVINE
+}
+
+enum Types {
+  Aqua
+  Beast
+  Beast_Warrior
+  Continuous
+  Counter
+  Creator_God
+  Cyberse
+  Dinosaur
+  Divine_Beast
+  Dragon
+  Equip
+  Fairy
+  Field
+  Fiend
+  Fish
+  Insect
+  Machine
+  Normal
+  Plant
+  Psychic
+  Pyro
+  Quick_Play
+  Reptile
+  Ritual
+  Rock
+  Sea_Serpent
+  Spellcaster
+  Thunder
+  Warrior
+  Winged_Beast
+  Wyrm
+  Zombie
 }

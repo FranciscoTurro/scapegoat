@@ -5,6 +5,7 @@ import SessionProvider from '@/lib/auth/SessionProvider';
 import { authOptions } from '../lib/auth/authOptions';
 import { Navbar } from './_components/Navbar';
 import { Inter } from 'next/font/google';
+import { loadDbFromJSON } from '../utils/populateDb';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
@@ -23,6 +24,8 @@ const RootLayout = async ({
   children: React.ReactNode;
 }>) => {
   const session = await getServerSession(authOptions);
+
+  loadDbFromJSON();
 
   return (
     <html lang="en">

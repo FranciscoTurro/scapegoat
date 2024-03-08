@@ -76,13 +76,11 @@ export const Searchbar: React.FC<{ cards: CardInfo[] }> = ({
             {filteredItems.map((item, index) => (
               <div className="flex items-center " key={item.id}>
                 <Link
+                  onClick={handleSuggestionClick}
                   className="hover:bg-accent  flex w-full"
                   href={`/search/${item.id}`}
                 >
-                  <li
-                    onClick={handleSuggestionClick}
-                    className="w-full flex items-center px-4 py-2 cursor-pointer"
-                  >
+                  <li className="w-full flex items-center px-4 py-2 cursor-pointer">
                     {item.name}
                   </li>
                   <Image

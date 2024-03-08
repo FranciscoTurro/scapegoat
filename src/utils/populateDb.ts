@@ -1,9 +1,10 @@
+import { Attributes, Types } from '@prisma/client';
 import * as cards from '../../../../Desktop/cardinfo.php.json';
 import prisma from '../lib/db/db';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export const loadPrismaFromJSON = async () => {
+export const loadDbFromJSON = async () => {
   //make a call to the api, get all cards and download it as a json. seems like the easiest way to populate the db
   const obj = JSON.parse(JSON.stringify(cards));
 
@@ -13,25 +14,27 @@ export const loadPrismaFromJSON = async () => {
     let atk: number | null = null;
     let def: number | null = null;
     let level: number | null = null;
-    let attribute: string | null = null;
+    let attribute: Attributes | null = null;
 
     if (card.atk) atk = card.atk;
     if (card.def) def = card.def;
     if (card.level) level = card.level;
-    if (card.attribute) attribute = card.attribute;
+    if (card.attribute) attribute = getAttribute(card.attribute as string);
+
+    let race = getRace(card.race as string);
 
     const cardData = {
       id: card.id.toString() as string,
       name: card.name as string,
       type: card.type as string,
       desc: card.desc as string,
-      race: card.race as string,
+      race,
       atk,
       def,
       level,
       attribute,
-      full_image_path: card.card_images[0].image_url,
-      small_image_path: card.card_images[0].image_url_small,
+      full_image_path: `/cards/${card.id}.jpg`,
+      small_image_path: `/cards/${card.id}_small.jpg`,
     };
 
     cardDataArray.push(cardData);
@@ -101,4 +104,96 @@ const downloadImage = async (url: string, filePath: string) => {
 
 const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+const getAttribute = (attribute: string) => {
+  switch (attribute) {
+    case 'DARK':
+      return Attributes.DARK;
+    case 'LIGHT':
+      return Attributes.LIGHT;
+    case 'EARTH':
+      return Attributes.EARTH;
+    case 'WIND':
+      return Attributes.WIND;
+    case 'FIRE':
+      return Attributes.FIRE;
+    case 'WATER':
+      return Attributes.WATER;
+    case 'DIVINE':
+      return Attributes.DIVINE;
+    default:
+      return Attributes.DARK; //awful
+  }
+};
+
+const getRace = (race: string) => {
+  switch (race) {
+    case 'Beast-Warrior':
+      return Types.Beast_Warrior;
+    case 'Creator God':
+      return Types.Creator_God;
+    case 'Divine-Beast':
+      return Types.Divine_Beast;
+    case 'Sea Serpent':
+      return Types.Sea_Serpent;
+    case 'Winged Beast':
+      return Types.Winged_Beast;
+    case 'Quick-Play':
+      return Types.Quick_Play;
+    case 'Aqua':
+      return Types.Aqua;
+    case 'Beast':
+      return Types.Beast;
+    case 'Continuous':
+      return Types.Continuous;
+    case 'Counter':
+      return Types.Counter;
+    case 'Cyberse':
+      return Types.Cyberse;
+    case 'Dinosaur':
+      return Types.Dinosaur;
+    case 'Dragon':
+      return Types.Dragon;
+    case 'Equip':
+      return Types.Equip;
+    case 'Fairy':
+      return Types.Fairy;
+    case 'Field':
+      return Types.Field;
+    case 'Fiend':
+      return Types.Fiend;
+    case 'Fish':
+      return Types.Fish;
+    case 'Insect':
+      return Types.Insect;
+    case 'Machine':
+      return Types.Machine;
+    case 'Normal':
+      return Types.Normal;
+    case 'Plant':
+      return Types.Plant;
+    case 'Psychic':
+      return Types.Psychic;
+    case 'Pyro':
+      return Types.Pyro;
+    case 'Reptile':
+      return Types.Reptile;
+    case 'Ritual':
+      return Types.Ritual;
+    case 'Rock':
+      return Types.Rock;
+    case 'Spellcaster':
+      return Types.Spellcaster;
+    case 'Thunder':
+      return Types.Thunder;
+    case 'Warrior':
+      return Types.Warrior;
+    case 'Wyrm':
+      return Types.Wyrm;
+    case 'Zombie':
+      return Types.Zombie;
+    default:
+      return Types.Warrior; //awful
+  }
 };
