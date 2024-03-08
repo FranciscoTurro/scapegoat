@@ -15,6 +15,7 @@ model Card {
   atk              Int?
   def              Int?
   level            Int?
+  linkval          Int?
   attribute        Attributes?
   race             Types
   full_image_path  String

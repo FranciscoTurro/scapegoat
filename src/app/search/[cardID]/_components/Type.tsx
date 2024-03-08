@@ -1,35 +1,13 @@
-import { Types } from '@prisma/client';
 import Image from 'next/image';
 
-export const Type = ({ type }: { type: Types }) => {
-  const value = getValue(type);
-
+export const Type = ({ type, id }: { type: string; id: string }) => {
   return (
-    <div className="w-72 flex items-center justify-between border px-4 py-2 rounded-sm border-border">
+    <div className="w-80 flex items-center justify-between border px-4 py-2 rounded-sm border-border">
       <div>
-        <div className="text-sm text-gray-400">Typing</div>
-        <div>{value}</div>
+        <div className="text-sm text-gray-400">Type</div>
+        <div>{type}</div>
       </div>
-      <Image src={`/misc/${type}.png`} width={24} height={24} alt={`${type}`} />
+      <Image src={`/cards/${id}_small.jpg`} width={24} height={24} alt="card" />
     </div>
   );
-};
-
-const getValue = (type: Types) => {
-  switch (type) {
-    case 'Beast_Warrior':
-      return 'Beast-Warrior';
-    case 'Creator_God':
-      return 'Creator God';
-    case 'Divine_Beast':
-      return 'Divine-Beast';
-    case 'Quick_Play':
-      return 'Quick-Play';
-    case 'Sea_Serpent':
-      return 'Sea Serpent';
-    case 'Winged_Beast':
-      return 'Winged Beast';
-    default:
-      return type;
-  }
 };

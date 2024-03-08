@@ -6,19 +6,22 @@ import * as path from 'path';
 
 export const loadDbFromJSON = async () => {
   //make a call to the api, get all cards and download it as a json. seems like the easiest way to populate the db
-  const obj = JSON.parse(JSON.stringify(cards));
 
   const cardDataArray: any[] = [];
+
+  const obj = JSON.parse(JSON.stringify(cards));
 
   await obj.data.forEach((card: any) => {
     let atk: number | null = null;
     let def: number | null = null;
     let level: number | null = null;
     let attribute: Attributes | null = null;
+    let linkval: number | null = null;
 
     if (card.atk) atk = card.atk;
     if (card.def) def = card.def;
     if (card.level) level = card.level;
+    if (card.linkval) linkval = card.linkval;
     if (card.attribute) attribute = getAttribute(card.attribute as string);
 
     let race = getRace(card.race as string);
@@ -27,11 +30,12 @@ export const loadDbFromJSON = async () => {
       id: card.id.toString() as string,
       name: card.name as string,
       type: card.type as string,
-      desc: card.desc as string,
+      desc: card.desc.replace(/\n/g, '\\n') as string,
       race,
       atk,
       def,
       level,
+      linkval,
       attribute,
       full_image_path: `/cards/${card.id}.jpg`,
       small_image_path: `/cards/${card.id}_small.jpg`,

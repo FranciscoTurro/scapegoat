@@ -9,9 +9,9 @@ import Link from 'next/link';
 
 export const Navbar = ({}) => {
   const pathname = usePathname();
-  const isCombos = pathname == '/combos';
-  const isChokePoints = pathname == '/choke-points';
-  const isSearch = pathname == '/search';
+  const isCombos = pathname.includes('/combos');
+  const isChokePoints = pathname.includes('/choke-points');
+  const isSearch = pathname.includes('/search');
 
   return (
     <nav className="border-b border-border">
