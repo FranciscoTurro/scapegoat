@@ -1,4 +1,10 @@
-import { AuthOptions } from 'next-auth';
+import type {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from 'next';
+import { getServerSession } from 'next-auth';
+import { AuthOptions, NextAuthOptions } from 'next-auth';
 import Discord from 'next-auth/providers/discord';
 import prisma from '../db/db';
 import { PrismaAdapter } from '@auth/prisma-adapter';
@@ -18,4 +24,14 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
-};
+} satisfies NextAuthOptions;
+
+//for server stuff
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions);
+}

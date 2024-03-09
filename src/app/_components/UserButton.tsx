@@ -18,7 +18,6 @@ export const UserButton = () => {
   if (!data || !data.user)
     return (
       <Button
-        className="bg-white hover:bg-white/90 text-black"
         onClick={() => {
           signIn();
         }}

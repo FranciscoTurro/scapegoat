@@ -25,28 +25,28 @@ const config: Config = {
         border: '#333',
         input: '#111',
         primary: {
-          DEFAULT: '#d1554b',
-          foreground: '#7a2d39',
+          DEFAULT: '#fff',
+          foreground: '#000',
         },
         secondary: {
-          DEFAULT: '#333',
-          foreground: '#ccc',
+          DEFAULT: '#27272a',
+          foreground: '#fff',
         },
         destructive: {
           DEFAULT: '#7f1d1d',
-          foreground: '#cc6666',
+          foreground: '#fff',
         },
         muted: {
-          DEFAULT: '#666',
-          foreground: '#999',
+          DEFAULT: '#27272a',
+          foreground: '#a1a1aa',
         },
         accent: {
-          DEFAULT: '#333',
-          foreground: '#',
+          DEFAULT: '#27272a',
+          foreground: '#fff',
         },
         popover: {
-          DEFAULT: '#444',
-          foreground: '#ccc',
+          DEFAULT: '#09090b',
+          foreground: '#fff',
         },
         card: {
           DEFAULT: '#000',

@@ -21,13 +21,13 @@ const CardPage = async ({
     .map((str) => <p key={str}>{str}</p>); //would love a cleaner solution
 
   return (
-    <div className="w-full container pt-8">
+    <div className="w-full container pt-2">
       <div className="rounded-sm gap-10 pl-6 pr-2 w-full justify-between flex py-8 flex-row">
         <Image
           className="rounded-md"
           src={card!.full_image_path}
-          width={313}
-          height={456}
+          width={400}
+          height={500}
           alt={`${card.name} artwork`}
         />
         <div className="w-full flex flex-col gap-3">
