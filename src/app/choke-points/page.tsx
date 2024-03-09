@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from '../../components/ui/button';
 import { auth } from '../../lib/auth/auth';
 
@@ -9,7 +10,11 @@ const ChokePage = async () => {
   return (
     <div>
       <p>chokers waiting room</p>
-      {session.user.role == 'admin' ? <Button>hoochie mama</Button> : null}
+      {session.user.role == 'admin' ? (
+        <Link href={'/choke-points/create-deck'}>
+          <Button>Create new</Button>
+        </Link>
+      ) : null}
     </div>
   );
 };
