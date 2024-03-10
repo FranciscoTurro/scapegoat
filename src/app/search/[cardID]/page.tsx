@@ -9,11 +9,11 @@ import { LinkVal } from './_components/Linkval';
 import { Type } from './_components/Type';
 
 const CardPage = async ({
-  params: { cardID },
+  params: { cardId },
 }: {
-  params: { cardID: string };
+  params: { cardId: string };
 }) => {
-  const card = await getCard(cardID);
+  const card = await getCard(cardId);
   if (!card) return <div>error</div>;
 
   const isXYZ = card.type.includes('XYZ');

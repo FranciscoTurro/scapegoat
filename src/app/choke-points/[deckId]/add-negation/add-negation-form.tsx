@@ -28,7 +28,9 @@ export const AddNegationForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
         <SetCardSearchbar setter={setNegatingCard} cards={cards} />
         <div className="font-semibold">Negated card</div>
         <SetCardSearchbar setter={setNegatedCard} cards={cards} />
-        <Button type="submit">Add negation</Button>
+        <Button disabled={!negatedCard || !negatingCard} type="submit">
+          Add negation
+        </Button>
       </form>
       <div className="flex w-full justify-center pt-10 gap-20">
         {negatingCard ? (

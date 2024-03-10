@@ -1,4 +1,6 @@
-// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
@@ -18,16 +20,28 @@ model Card {
   race             Types
   full_image_path  String
   small_image_path String
-  Negations        Negation[]  @relation("negatingCard")
+  Negates          Negation[]  @relation("negatingCard")
   NegatedBy        Negation[]  @relation("negatedCard")
+  Deck             Deck[]
 }
 
 model Negation {
-  id             Int    @id @default(autoincrement())
-  negatingCard   Card   @relation("negatingCard", fields: [negatingCardId], references: [id])
+  id             String  @id @default(cuid())
+  negatingCard   Card    @relation("negatingCard", fields: [negatingCardId], references: [id])
   negatingCardId String
-  negatedCards   Card[] @relation("negatedCard")
+  negatedCard    Card    @relation("negatedCard", fields: [negatedCardId], references: [id])
+  negatedCardId  String
   priority       Int
+  Deck           Deck?   @relation(fields: [deckId], references: [id])
+  deckId         String?
+}
+
+model Deck {
+  id          String     @id @default(cuid())
+  name        String
+  cover_card  Card       @relation(fields: [coverCardId], references: [id])
+  coverCardId String
+  Negations   Negation[]
 }
 
 model User {
