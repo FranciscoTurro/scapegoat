@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation';
 import { getCardsInfo } from '../../../data-access/cards';
 import { auth } from '../../../lib/auth/auth';
-import { CreateDeckForm } from './_components/create-deck-form';
+import { AddNegationForm } from './add-negation-form';
 
-const DeckPage = async () => {
+const NegationPage = async () => {
   const session = await auth();
   if (!session || !session.user || session.user.role != 'admin') redirect('/');
 
   const cards = await getCardsInfo();
 
-  return <CreateDeckForm cards={cards} />;
+  return <AddNegationForm cards={cards} />;
 };
 
-export default DeckPage;
+export default NegationPage;

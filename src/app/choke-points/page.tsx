@@ -11,8 +11,8 @@ const ChokePage = async () => {
     <div>
       <p>chokers waiting room</p>
       {session.user.role == 'admin' ? (
-        <Link href={'/choke-points/create-deck'}>
-          <Button>Create new</Button>
+        <Link href={'/choke-points/add-negation'}>
+          <Button>Add new</Button>
         </Link>
       ) : null}
     </div>

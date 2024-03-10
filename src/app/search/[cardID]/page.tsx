@@ -16,6 +16,8 @@ const CardPage = async ({
   const card = await getCard(cardID);
   if (!card) return <div>error</div>;
 
+  const isXYZ = card.type.includes('XYZ');
+
   const descriptionWithLineBreaks = card.desc
     .split('\\n')
     .map((str) => <p key={str}>{str}</p>); //would love a cleaner solution
@@ -40,7 +42,7 @@ const CardPage = async ({
             <div className="flex pt-2 gap-5">
               {card.attribute ? <Attribute attribute={card.attribute} /> : null}
               {card.linkval ? <LinkVal linkval={card.linkval} /> : null}
-              {card.level ? <Level level={card.level} /> : null}
+              {card.level ? <Level isXYZ={isXYZ} level={card.level} /> : null}
               {card.atk ? <Atk atk={card.atk} /> : null}
               {card.def ? <Def def={card.def} /> : null}
             </div>

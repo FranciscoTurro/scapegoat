@@ -18,23 +18,12 @@ model Card {
   race             Types
   full_image_path  String
   small_image_path String
-  Deck             Deck[]
   Negations        Negation[]  @relation("negatingCard")
   NegatedBy        Negation[]  @relation("negatedCard")
 }
 
-model Deck {
-  id         String     @id @default(cuid())
-  name       String
-  cover_card Card       @relation(fields: [cardId], references: [id])
-  cardId     String
-  Negations  Negation[]
-}
-
 model Negation {
   id             Int    @id @default(autoincrement())
-  deck           Deck   @relation(fields: [deckId], references: [id])
-  deckId         String
   negatingCard   Card   @relation("negatingCard", fields: [negatingCardId], references: [id])
   negatingCardId String
   negatedCards   Card[] @relation("negatedCard")

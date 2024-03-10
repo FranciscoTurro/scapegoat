@@ -61,7 +61,7 @@ export const SetCardSearchbar: React.FC<{
   return (
     <div className="w-full h-16">
       <div className="relative h-10 w-full">
-        <Search className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
+        <Search className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <Input
           ref={inputRef}
           type="text"
