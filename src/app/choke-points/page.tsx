@@ -20,15 +20,17 @@ const ChokePage = async () => {
         </Link>
       ) : null}
       {decks.map((deck) => (
-        <div className="flex gap-4" key={deck.id}>
-          <p>{deck.name}</p>
-          <Image
-            src={deck.cover_card.small_image_path}
-            height={20}
-            width={20}
-            alt={`${deck.name}'s cover card`}
-          />
-        </div>
+        <Link key={deck.id} href={`/choke-points/${deck.id}`}>
+          <div className="flex bg-red-500 gap-4">
+            <p>{deck.name}</p>
+            <Image
+              src={deck.cover_card.small_image_path}
+              height={20}
+              width={20}
+              alt={`${deck.name}'s cover card`}
+            />
+          </div>
+        </Link>
       ))}
     </div>
   );

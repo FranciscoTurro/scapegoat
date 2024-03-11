@@ -30,7 +30,7 @@ export const CreateDeckForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
         <div className="font-semibold">Negated card</div>
         <SetCardSearchbar setter={setCoverCard} cards={cards} />
         <Button disabled={!coverCard} type="submit">
-          Add negation
+          Create deck
         </Button>
         {error ? <div>{error}</div> : null}
       </form>

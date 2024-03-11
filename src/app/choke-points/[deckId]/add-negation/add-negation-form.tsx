@@ -1,27 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '../../../components/ui/button';
-import { CardInfo } from '../../../types/CardInfo';
-import { SetCardSearchbar } from '../../_components/SetCardSearchbar';
 import { addNegation } from './_actions/addNegation';
 import Image from 'next/image';
 import { Navigation2Off } from 'lucide-react';
+import { Button } from '../../../../components/ui/button';
+import { CardInfo } from '../../../../types/CardInfo';
+import { SetCardSearchbar } from '../../../_components/SetCardSearchbar';
 
-export const AddNegationForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
+export const AddNegationForm: React.FC<{
+  cards: CardInfo[];
+  deckId: string;
+}> = ({ cards, deckId }) => {
   const [negatingCard, setNegatingCard] = useState<CardInfo>();
   const [negatedCard, setNegatedCard] = useState<CardInfo>();
+  const [error, setError] = useState('');
 
-  const addNegationWithCard = addNegation.bind(
-    null,
-    negatingCard!,
-    negatedCard!
-  );
+  const clientAction = async () => {
+    if (!negatingCard || !negatedCard) setError('Must select both cards');
+    const result = await addNegation(negatingCard!, negatedCard!, deckId);
+
+    if (result.error) {
+      setError(result.error);
+    }
+  };
 
   return (
-    <div className="pt-16 flex flex-col w-full items-center justify-center">
+    <div className="pt-8 flex flex-col w-full items-center justify-center">
       <form
-        action={addNegationWithCard}
+        action={clientAction}
         className="w-1/4 flex flex-col gap-3 items-start"
       >
         <div className="font-semibold">Negating card</div>

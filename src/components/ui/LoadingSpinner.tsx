@@ -11,7 +11,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     <div role="status" className="w-full p-10 flex justify-center">
       <svg
         aria-hidden="true"
-        className="mr-2 animate-spin fill-orange-400 text-white"
+        className="mr-2 animate-spin fill-background text-foreground"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
