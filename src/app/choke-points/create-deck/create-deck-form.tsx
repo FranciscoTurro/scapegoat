@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { CardInfo } from '../../../types/CardInfo';
-import { SetCardSearchbar } from '../../_components/SetCardSearchbar';
+import { SetCardSearchbar } from '../../_components/set-card-searchbar';
 import { createDeck } from './_actions/createDeck';
 import { Input } from '../../../components/ui/input';
 

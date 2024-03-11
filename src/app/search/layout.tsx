@@ -1,5 +1,5 @@
-import { Searchbar } from './_components/Searchbar';
 import { getCardsInfo } from '../../data-access/cards';
+import { Searchbar } from './_components/Searchbar';
 
 const SearchLayout = async ({
   children,

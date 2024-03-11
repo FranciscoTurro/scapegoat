@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
-import { getServerSession } from 'next-auth';
-import SessionProvider from '@/lib/auth/SessionProvider';
-import { Navbar } from './_components/Navbar';
+import SessionProvider from '@/lib/auth/session-provider';
 import { Inter } from 'next/font/google';
 import { auth } from '../lib/auth/auth';
+import { Navbar } from './_components/navbar';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Navigation2Off } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
 import { CardInfo } from '../../../../types/CardInfo';
-import { SetCardSearchbar } from '../../../_components/SetCardSearchbar';
+import { SetCardSearchbar } from '../../../_components/set-card-searchbar';
 
 export const AddNegationForm: React.FC<{
   cards: CardInfo[];

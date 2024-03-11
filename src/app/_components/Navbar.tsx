@@ -4,7 +4,7 @@ import { Joystick, Search, ShieldX } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import page_icon from '../../../public/scapegoat_icon.png';
-import { UserButton } from './UserButton';
+import { UserButton } from './user-button';
 import Link from 'next/link';
 
 export const Navbar = ({}) => {
