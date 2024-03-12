@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { getCard } from '../../../data-access/cards';
-import { Type } from 'lucide-react';
-import { Atk } from './_components/Atk';
-import { Attribute } from './_components/Attribute';
-import { Def } from './_components/Def';
-import { Level } from './_components/Level';
-import { LinkVal } from './_components/Linkval';
-import { Typing } from './_components/Typing';
+import { Atk } from './_components/atk';
+import { Attribute } from './_components/attribute';
+import { Def } from './_components/def';
+import { Level } from './_components/level';
+import { LinkVal } from './_components/linkval';
+import { Typing } from './_components/typing';
+import { Type } from './_components/type';
 
 const CardPage = async ({
   params: { cardId },
