@@ -13,12 +13,14 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   baseUrl: string;
+  filter?: string;
 }
 
 const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   baseUrl,
+  filter,
 }) => {
   const paginationItems = [];
 
@@ -38,7 +40,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
     paginationItems.push(
       <PaginationItem key={`page-${i}`}>
         <PaginationLink
-          href={`${baseUrl}?page=${i}`}
+          href={`${baseUrl}?page=${i}${filter ? `&filter=${filter}` : ''}`} // Include filter if it exists
           isActive={i === currentPage}
         >
           {i}
@@ -57,7 +59,9 @@ const PaginationComponent: React.FC<PaginationProps> = ({
             className={
               currentPage <= 1 ? 'pointer-events-none opacity-50' : undefined
             }
-            href={`${baseUrl}?page=${currentPage - 1}`}
+            href={`${baseUrl}?page=${currentPage - 1}${
+              filter ? `&filter=${filter}` : ''
+            }`} // Include filter if it exists
           />
         </PaginationItem>
         {paginationItems}
@@ -70,7 +74,9 @@ const PaginationComponent: React.FC<PaginationProps> = ({
                 ? 'pointer-events-none opacity-50'
                 : undefined
             }
-            href={`${baseUrl}?page=${currentPage + 1}`}
+            href={`${baseUrl}?page=${currentPage + 1}${
+              filter ? `&filter=${filter}` : ''
+            }`} // Include filter if it exists
           />
         </PaginationItem>
       </PaginationContent>

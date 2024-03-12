@@ -51,6 +51,7 @@ const ChokePage = async ({
         </Link>
       ) : null}
       <PaginationComponent
+        filter={String(filter)}
         currentPage={Number(page)}
         totalPages={totalPages}
         baseUrl={'choke-points'}
