@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Button } from '../../components/ui/button';
 import { auth } from '../../lib/auth/auth';
-import { getDecks } from '../../data-access/decks';
+import { getDecksPaginated } from '../../data-access/decks';
 import PaginationComponent from '../_components/pagination-component';
 import Image from 'next/image';
+import { FilterBar } from './_components/filter-bar';
 
 const ChokePage = async ({
   searchParams,
@@ -13,29 +14,27 @@ const ChokePage = async ({
   //TODOS:
   //search bar for filtering
   //styling
-  //look up prisma filtering, skip and what not
 
   const session = await auth();
   const authorizedUser =
     session && session.user && session.user.role == 'admin';
 
-  const decks = await getDecks();
-
   const page = searchParams['page'] ?? '1';
-  const decksPerPage = searchParams['per_page'] ?? '1';
-  const start = (Number(page) - 1) * Number(decksPerPage);
-  const end = start + Number(decksPerPage);
+  const filter = searchParams['filter'] ?? '';
+  const decksPerPage = 10;
 
-  const paginatedDecks = decks.slice(start, end);
-
-  const totalDecks = decks.length;
-  const totalPages = Math.ceil(totalDecks / Number(decksPerPage));
+  const { decks, totalPages } = await getDecksPaginated(
+    Number(page),
+    decksPerPage,
+    String(filter)
+  );
 
   return (
     <div>
-      {paginatedDecks.map((deck) => (
+      <FilterBar />
+      {decks.map((deck) => (
         <Link key={deck.id} href={`/choke-points/${deck.id}`}>
-          <div className="flex bg-red-500 gap-4">
+          <div className="flex hover:bg-red-300 bg-red-500 gap-4">
             <p>{deck.name}</p>
             <Image
               src={deck.cover_card.small_image_path}
@@ -54,8 +53,7 @@ const ChokePage = async ({
       <PaginationComponent
         currentPage={Number(page)}
         totalPages={totalPages}
-        decksPerPage={Number(decksPerPage)}
-        baseUrl={'choke-points/'}
+        baseUrl={'choke-points'}
       />
     </div>
   );

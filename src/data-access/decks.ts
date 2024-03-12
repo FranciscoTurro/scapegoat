@@ -1,10 +1,37 @@
 import prisma from '../lib/db/db';
 
-export const getDecks = async () => {
-  return await prisma.deck.findMany({
+export const getDecksPaginated = async (
+  page: number,
+  perPage: number,
+  filter: string
+) => {
+  const skip = (page - 1) * perPage;
+
+  const decks = await prisma.deck.findMany({
     include: { cover_card: true },
     orderBy: { name: 'asc' },
+    skip,
+    take: perPage,
+    where: {
+      name: {
+        contains: filter,
+        mode: 'insensitive',
+      },
+    },
   });
+
+  const totalDecks = await prisma.deck.count({
+    where: {
+      name: {
+        contains: filter,
+        mode: 'insensitive',
+      },
+    },
+  });
+
+  const totalPages = Math.ceil(totalDecks / perPage);
+
+  return { decks, totalPages };
 };
 
 export const getDeck = async (id: string) => {

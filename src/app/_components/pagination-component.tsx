@@ -12,14 +12,12 @@ import {
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  decksPerPage: number;
   baseUrl: string;
 }
 
 const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  decksPerPage,
   baseUrl,
 }) => {
   const paginationItems = [];
@@ -40,7 +38,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
     paginationItems.push(
       <PaginationItem key={`page-${i}`}>
         <PaginationLink
-          href={`${baseUrl}?page=${i}&per_page=${decksPerPage}`}
+          href={`${baseUrl}?page=${i}`}
           isActive={i === currentPage}
         >
           {i}
@@ -59,7 +57,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
             className={
               currentPage <= 1 ? 'pointer-events-none opacity-50' : undefined
             }
-            href={`${baseUrl}?page=${currentPage - 1}&per_page=${decksPerPage}`}
+            href={`${baseUrl}?page=${currentPage - 1}`}
           />
         </PaginationItem>
         {paginationItems}
@@ -72,7 +70,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
                 ? 'pointer-events-none opacity-50'
                 : undefined
             }
-            href={`${baseUrl}?page=${currentPage + 1}&per_page=${decksPerPage}`}
+            href={`${baseUrl}?page=${currentPage + 1}`}
           />
         </PaginationItem>
       </PaginationContent>
