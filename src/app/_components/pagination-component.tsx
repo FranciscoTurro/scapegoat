@@ -24,23 +24,21 @@ const PaginationComponent: React.FC<PaginationProps> = ({
 }) => {
   const paginationItems = [];
 
-  for (let i = 1; i <= totalPages; i++) {
-    if (
-      totalPages > 7 &&
-      i > 2 &&
-      i < totalPages - 1 &&
-      Math.abs(i - currentPage) > 1
-    ) {
-      if (i === 3 || i === totalPages - 2) {
-        paginationItems.push(<PaginationEllipsis key={`ellipsis-${i}`} />);
-      }
-      continue;
-    }
+  const maxPagesToShow = 7;
+  const halfMaxPagesToShow = Math.floor(maxPagesToShow / 2);
 
+  let startPage = Math.max(1, currentPage - halfMaxPagesToShow);
+  let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+
+  if (endPage - startPage < maxPagesToShow - 1) {
+    startPage = Math.max(1, endPage - maxPagesToShow + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
     paginationItems.push(
       <PaginationItem key={`page-${i}`}>
         <PaginationLink
-          href={`${baseUrl}?page=${i}${filter ? `&filter=${filter}` : ''}`} // Include filter if it exists
+          href={`${baseUrl}?page=${i}${filter ? `&filter=${filter}` : ''}`}
           isActive={i === currentPage}
         >
           {i}
@@ -49,19 +47,32 @@ const PaginationComponent: React.FC<PaginationProps> = ({
     );
   }
 
+  if (startPage > 1) {
+    paginationItems.unshift(<PaginationEllipsis key="ellipsis-start" />);
+  }
+
+  if (endPage < totalPages) {
+    paginationItems.push(<PaginationEllipsis key="ellipsis-end" />);
+  }
+
+  if (startPage > 1 && endPage < totalPages) {
+    paginationItems.splice(1, 1);
+  }
+
   return (
-    <Pagination>
+    <Pagination className="fixed bottom-0 w-full pb-10">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             aria-disabled={currentPage <= 1}
             tabIndex={currentPage <= 1 ? -1 : undefined}
-            className={
+            className={`
+            ${
               currentPage <= 1 ? 'pointer-events-none opacity-50' : undefined
-            }
+            } w-24`}
             href={`${baseUrl}?page=${currentPage - 1}${
               filter ? `&filter=${filter}` : ''
-            }`} // Include filter if it exists
+            }`}
           />
         </PaginationItem>
         {paginationItems}
@@ -69,14 +80,15 @@ const PaginationComponent: React.FC<PaginationProps> = ({
           <PaginationNext
             aria-disabled={currentPage === totalPages}
             tabIndex={currentPage === totalPages ? -1 : undefined}
-            className={
-              currentPage === totalPages
-                ? 'pointer-events-none opacity-50'
-                : undefined
-            }
+            className={`
+              ${
+                currentPage === totalPages
+                  ? 'pointer-events-none opacity-50'
+                  : undefined
+              } w-24`}
             href={`${baseUrl}?page=${currentPage + 1}${
               filter ? `&filter=${filter}` : ''
-            }`} // Include filter if it exists
+            }`}
           />
         </PaginationItem>
       </PaginationContent>

@@ -84,7 +84,7 @@ export const SetCardSearchbar: React.FC<{
                   {item.name}
                 </li>
                 <Image
-                  className="w-auto"
+                  className="w-auto h-auto"
                   src={item.small_image_path}
                   height={30}
                   width={20}

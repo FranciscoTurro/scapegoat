@@ -5,7 +5,7 @@ import { CardInfo } from '../../../../types/CardInfo';
 import { auth } from '../../../../lib/auth/auth';
 import prisma from '../../../../lib/db/db';
 import { redirect } from 'next/navigation';
-import { getErrorMessage } from '../../../../utils/getErrorMessage';
+import { getErrorMessage } from '../../../../utils/utils';
 
 export const createDeck = async (coverCard: CardInfo, formData: FormData) => {
   const session = await auth();

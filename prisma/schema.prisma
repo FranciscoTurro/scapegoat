@@ -26,14 +26,14 @@ model Card {
 }
 
 model Negation {
-  id             String  @id @default(cuid())
-  negatingCard   Card    @relation("negatingCard", fields: [negatingCardId], references: [id])
+  id             String @id @default(cuid())
+  negatingCard   Card   @relation("negatingCard", fields: [negatingCardId], references: [id])
   negatingCardId String
-  negatedCard    Card    @relation("negatedCard", fields: [negatedCardId], references: [id])
+  negatedCard    Card   @relation("negatedCard", fields: [negatedCardId], references: [id])
   negatedCardId  String
   priority       Int
-  Deck           Deck?   @relation(fields: [deckId], references: [id])
-  deckId         String?
+  deck           Deck   @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId         String
 }
 
 model Deck {

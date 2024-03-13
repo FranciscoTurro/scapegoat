@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '../../../../../lib/auth/auth';
 import { CardInfo } from '../../../../../types/CardInfo';
 import prisma from '../../../../../lib/db/db';
-import { getErrorMessage } from '../../../../../utils/getErrorMessage';
 import { redirect } from 'next/navigation';
+import { getErrorMessage } from '../../../../../utils/utils';
 
 export const addNegation = async (
   negatingCard: CardInfo,
