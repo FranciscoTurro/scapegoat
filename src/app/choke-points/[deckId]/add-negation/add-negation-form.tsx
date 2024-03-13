@@ -7,6 +7,7 @@ import { Navigation2Off } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
 import { CardInfo } from '../../../../types/CardInfo';
 import { SetCardSearchbar } from '../../../_components/set-card-searchbar';
+import { Textarea } from '../../../../components/ui/textarea';
 
 export const AddNegationForm: React.FC<{
   cards: CardInfo[];
@@ -16,9 +17,17 @@ export const AddNegationForm: React.FC<{
   const [negatedCard, setNegatedCard] = useState<CardInfo>();
   const [error, setError] = useState('');
 
-  const clientAction = async () => {
+  const clientAction = async (formData: FormData) => {
     if (!negatingCard || !negatedCard) setError('Must select both cards');
-    const result = await addNegation(negatingCard!, negatedCard!, deckId);
+
+    const comment = formData.get('comment')?.toString();
+
+    const result = await addNegation(
+      negatingCard!,
+      negatedCard!,
+      comment,
+      deckId
+    );
 
     if (result.error) {
       setError(result.error);
@@ -29,15 +38,20 @@ export const AddNegationForm: React.FC<{
     <div className="pt-8 flex flex-col w-full items-center justify-center">
       <form
         action={clientAction}
-        className="w-1/4 flex flex-col gap-3 items-start"
+        className="w-1/4 flex flex-col gap-2 items-start"
       >
         <div className="font-semibold">Negating card</div>
         <SetCardSearchbar setter={setNegatingCard} cards={cards} />
         <div className="font-semibold">Negated card</div>
         <SetCardSearchbar setter={setNegatedCard} cards={cards} />
+        <div className="font-semibold">Comment (optional)</div>
+        <Textarea name="comment" placeholder="Enter your comment" />
         <Button disabled={!negatedCard || !negatingCard} type="submit">
           Add negation
         </Button>
+        {error ? (
+          <div className="font-semibold text-red-500">{error}</div>
+        ) : null}
       </form>
       <div className="flex w-full justify-center pt-10 gap-20">
         {negatingCard ? (

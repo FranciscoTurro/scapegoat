@@ -4,5 +4,6 @@ export const getNegations = async (deckId: string) => {
   return await prisma.negation.findMany({
     where: { deckId },
     include: { deck: true, negatedCard: true, negatingCard: true },
+    orderBy: [{ negatingCardId: 'asc' }, { priority: 'asc' }],
   });
 };

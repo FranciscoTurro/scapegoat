@@ -32,7 +32,9 @@ export const CreateDeckForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
         <Button disabled={!coverCard} type="submit">
           Create deck
         </Button>
-        {error ? <div>{error}</div> : null}
+        {error ? (
+          <div className="font-semibold text-red-500">{error}</div>
+        ) : null}
       </form>
     </div>
   );

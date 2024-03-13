@@ -10,6 +10,7 @@ import { getErrorMessage } from '../../../../../utils/utils';
 export const addNegation = async (
   negatingCard: CardInfo,
   negatedCard: CardInfo,
+  comment: string | undefined,
   deckId: string
 ) => {
   const session = await auth();
@@ -26,12 +27,25 @@ export const addNegation = async (
     };
 
   try {
+    const cardsNegatedByNegatingCard = await prisma.negation.findMany({
+      where: { negatingCardId: negatingCard.id },
+    });
+
+    let priority = 1;
+
+    await cardsNegatedByNegatingCard.forEach((card) => {
+      if (card.priority >= priority) {
+        priority = card.priority + 1;
+      }
+    });
+
     await prisma.negation.create({
       data: {
         deckId,
         negatedCardId: negatedCard.id,
         negatingCardId: negatingCard.id,
-        priority: 1,
+        comment,
+        priority,
       },
     });
   } catch (error) {

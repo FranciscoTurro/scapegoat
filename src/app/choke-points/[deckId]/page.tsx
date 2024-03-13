@@ -21,10 +21,14 @@ const DeckNegatesPage = async ({
         add negation
       </Link>
       {negations.map((negation) => (
-        <div className="flex gap-2" key={negation.id}>
+        <div
+          className="flex gap-2"
+          key={negation.negatingCardId + negation.negatedCardId}
+        >
           <p>{negation.negatingCard.name}</p>
           <p>negates</p>
           <p>{negation.negatedCard.name}</p>
+          <p>{negation.priority}</p>
         </div>
       ))}
     </div>
