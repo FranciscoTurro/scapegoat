@@ -40,3 +40,18 @@ export const getDeck = async (id: string) => {
     include: { cover_card: true },
   });
 };
+
+export const deleteDeck = async (id: string) => {
+  await prisma.deck.delete({
+    where: { id },
+  });
+};
+
+export const createDeck = async (name: string, coverCardId: string) => {
+  await prisma.deck.create({
+    data: {
+      name,
+      coverCardId,
+    },
+  });
+};

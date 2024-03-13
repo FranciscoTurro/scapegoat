@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { addNegation } from './_actions/addNegation';
+import { addNegationAction } from './_actions/addNegation';
 import Image from 'next/image';
 import { Navigation2Off } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
@@ -22,7 +22,7 @@ export const AddNegationForm: React.FC<{
 
     const comment = formData.get('comment')?.toString();
 
-    const result = await addNegation(
+    const result = await addNegationAction(
       negatingCard!,
       negatedCard!,
       comment,

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { CardInfo } from '../../../types/CardInfo';
 import { SetCardSearchbar } from '../../_components/set-card-searchbar';
-import { createDeck } from './_actions/createDeck';
+import { createDeckAction } from './_actions/createDeck';
 import { Input } from '../../../components/ui/input';
 
 export const CreateDeckForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
@@ -12,7 +12,7 @@ export const CreateDeckForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {
   const [error, setError] = useState('');
 
   const clientAction = async (formData: FormData) => {
-    const result = await createDeck(coverCard!, formData);
+    const result = await createDeckAction(coverCard!, formData);
 
     if (result.error) {
       setError(result.error);

@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from '../../components/ui/popover';
 import { CircleEllipsis, Trash2 } from 'lucide-react';
-import { deleteDeck } from './_actions/deleteDeck';
+import { deleteDeckAction } from './_actions/deleteDeck';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,7 +58,7 @@ const ChokePage = async ({
       ) : null}
       <div className="h-full justify-center flex-wrap gap-10 flex px-60 pt-5">
         {decks.map((deck) => {
-          const deleteDeckWithId = deleteDeck.bind(null, deck.id);
+          const deleteDeckWithId = deleteDeckAction.bind(null, deck.id);
 
           return (
             <div key={deck.id} className="relative">

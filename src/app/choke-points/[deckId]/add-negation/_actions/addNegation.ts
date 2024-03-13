@@ -6,8 +6,12 @@ import { CardInfo } from '../../../../../types/CardInfo';
 import prisma from '../../../../../lib/db/db';
 import { redirect } from 'next/navigation';
 import { getErrorMessage } from '../../../../../utils/utils';
+import {
+  createNegation,
+  getNegatedByCards,
+} from '../../../../../data-access/negations';
 
-export const addNegation = async (
+export const addNegationAction = async (
   negatingCard: CardInfo,
   negatedCard: CardInfo,
   comment: string | undefined,
@@ -27,10 +31,10 @@ export const addNegation = async (
     };
 
   try {
-    const cardsNegatedByNegatingCard = await prisma.negation.findMany({
-      where: { negatingCardId: negatingCard.id },
-    });
-
+    const cardsNegatedByNegatingCard = await getNegatedByCards(
+      negatingCard.id,
+      deckId
+    );
     let priority = 1;
 
     await cardsNegatedByNegatingCard.forEach((card) => {
@@ -39,15 +43,13 @@ export const addNegation = async (
       }
     });
 
-    await prisma.negation.create({
-      data: {
-        deckId,
-        negatedCardId: negatedCard.id,
-        negatingCardId: negatingCard.id,
-        comment,
-        priority,
-      },
-    });
+    await createNegation(
+      deckId,
+      negatedCard.id,
+      negatingCard.id,
+      comment,
+      priority
+    );
   } catch (error) {
     return {
       error: getErrorMessage(error),

@@ -6,8 +6,12 @@ import { auth } from '../../../../lib/auth/auth';
 import prisma from '../../../../lib/db/db';
 import { redirect } from 'next/navigation';
 import { getErrorMessage } from '../../../../utils/utils';
+import { createDeck } from '../../../../data-access/decks';
 
-export const createDeck = async (coverCard: CardInfo, formData: FormData) => {
+export const createDeckAction = async (
+  coverCard: CardInfo,
+  formData: FormData
+) => {
   const session = await auth();
   if (!session || !session.user || session.user.role != 'admin')
     throw new Error('NOT ADMIN');
@@ -25,12 +29,7 @@ export const createDeck = async (coverCard: CardInfo, formData: FormData) => {
     };
 
   try {
-    await prisma.deck.create({
-      data: {
-        name,
-        coverCardId: coverCard.id,
-      },
-    });
+    createDeck(name, coverCard.id);
   } catch (error) {
     return {
       error: getErrorMessage(error),
