@@ -13,6 +13,17 @@ import {
 } from '../../components/ui/popover';
 import { CircleEllipsis, Trash2 } from 'lucide-react';
 import { deleteDeck } from './_actions/deleteDeck';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const ChokePage = async ({
   searchParams,
@@ -72,15 +83,33 @@ const ChokePage = async ({
                       />
                     </PopoverTrigger>
                     <PopoverContent className="p-3 w-40">
-                      <form action={deleteDeckWithId}>
-                        <button
-                          type="submit"
-                          className="w-full focus:ring-0 flex p-1 hover:rounded gap-4 items-center cursor-pointer hover:bg-accent"
-                        >
-                          <Trash2 size={20} />
-                          <p>Delete</p>
-                        </button>
-                      </form>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button className="w-full focus:ring-0 flex p-1 hover:rounded gap-4 items-center cursor-pointer hover:bg-accent">
+                            <Trash2 size={20} />
+                            <p>Delete</p>
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete deck?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <form
+                              className="flex gap-2"
+                              action={deleteDeckWithId}
+                            >
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction type="submit">
+                                Confirm
+                              </AlertDialogAction>
+                            </form>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </PopoverContent>
                   </Popover>
                 </div>
