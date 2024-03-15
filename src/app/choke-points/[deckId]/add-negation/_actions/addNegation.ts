@@ -10,6 +10,7 @@ import {
   createNegation,
   getNegatedByCards,
 } from '../../../../../data-access/negations';
+import { getNegatingCards } from '../../../../../data-access/cards';
 
 export const addNegationAction = async (
   negatingCard: CardInfo,
@@ -21,6 +22,8 @@ export const addNegationAction = async (
   if (!session || !session.user || session.user.role != 'admin')
     throw new Error('NOT ADMIN');
 
+  const negatingCards = await getNegatingCards();
+
   if (!negatingCard)
     return {
       error: 'Must choose a negating card',
@@ -29,6 +32,13 @@ export const addNegationAction = async (
     return {
       error: 'Must choose a negated card',
     };
+
+  if (!negatingCards.find((card) => (card.id = negatingCard.id))) {
+    return {
+      error:
+        "I have no idea how you did this, so congratulations. Also, can't let you do it king.",
+    };
+  }
 
   try {
     const cardsNegatedByNegatingCard = await getNegatedByCards(

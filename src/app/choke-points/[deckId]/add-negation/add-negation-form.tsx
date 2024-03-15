@@ -8,11 +8,14 @@ import { Button } from '../../../../components/ui/button';
 import { CardInfo } from '../../../../types/CardInfo';
 import { SetCardSearchbar } from '../../../_components/set-card-searchbar';
 import { Textarea } from '../../../../components/ui/textarea';
+import { Card } from '@prisma/client';
+import { NegatingCardsSelect } from './_components/negating-cards-select';
 
 export const AddNegationForm: React.FC<{
   cards: CardInfo[];
   deckId: string;
-}> = ({ cards, deckId }) => {
+  negatingCards: Card[];
+}> = ({ cards, deckId, negatingCards }) => {
   const [negatingCard, setNegatingCard] = useState<CardInfo>();
   const [negatedCard, setNegatedCard] = useState<CardInfo>();
   const [error, setError] = useState('');
@@ -41,7 +44,7 @@ export const AddNegationForm: React.FC<{
         className="w-1/4 flex flex-col gap-2 items-start"
       >
         <div className="font-semibold">Negating card</div>
-        <SetCardSearchbar setter={setNegatingCard} cards={cards} />
+        <NegatingCardsSelect setter={setNegatingCard} cards={negatingCards} />
         <div className="font-semibold">Negated card</div>
         <SetCardSearchbar setter={setNegatedCard} cards={cards} />
         <div className="font-semibold">Comment (optional)</div>
