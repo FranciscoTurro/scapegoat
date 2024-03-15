@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { addNegationAction } from './_actions/addNegation';
+import { addNegationAction } from './_actions/addNegationAction';
 import Image from 'next/image';
 import { Navigation2Off } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';

@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from '../../components/ui/popover';
 import { CircleEllipsis, Trash2 } from 'lucide-react';
-import { deleteDeckAction } from './_actions/deleteDeck';
+import { deleteDeckAction } from './_actions/deleteDeckAction';
 import {
   AlertDialog,
   AlertDialogAction,
