@@ -1,6 +1,6 @@
 'use client';
-
-import { DndContext, DragEndEvent, closestCorners } from '@dnd-kit/core';
+import { useState } from 'react';
+import { DndContext, closestCorners } from '@dnd-kit/core';
 import {
   SortableContext,
   arrayMove,
@@ -8,12 +8,66 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useState } from 'react';
 import { Negation } from '@prisma/client';
 import { GetNegationsReturnType } from '../../../data-access/negations';
 
+interface DraggableNegationsProps {
+  negations: GetNegationsReturnType;
+  changePrio: (order: GetNegationsReturnType) => void;
+}
+
 const getNegationId = (negation: Negation) => {
   return negation.negatedCardId + negation.negatingCardId + negation.deckId;
+};
+
+export const DraggableNegations = ({
+  negations,
+  changePrio,
+}: DraggableNegationsProps) => {
+  const [items, setItems] = useState(negations);
+
+  const onDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    if (active.id === over.id) return;
+
+    setItems((items) => {
+      const newOrder = arrayMove(
+        items,
+        items.findIndex((item) => getNegationId(item) === active.id),
+        items.findIndex((item) => getNegationId(item) === over.id)
+      );
+      changePrio(newOrder);
+
+      return newOrder;
+    });
+  };
+
+  return (
+    <div className="bg-red-400 border-4 flex gap-4 border-white p-2">
+      <h1 className="bg-blue-600">
+        {negations[0].negatingCard.name} negates:{' '}
+      </h1>
+      <DndContext
+        id={negations[0].negatingCardId}
+        collisionDetection={closestCorners}
+        onDragEnd={onDragEnd}
+      >
+        <SortableContext
+          items={items.map((item) => getNegationId(item))}
+          strategy={horizontalListSortingStrategy}
+        >
+          {items.map((negation) => (
+            <SortableNegation
+              key={getNegationId(negation)}
+              negation={negation}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
+    </div>
+  );
 };
 
 const SortableNegation = ({
@@ -38,56 +92,9 @@ const SortableNegation = ({
       {...attributes}
       {...listeners}
       className="flex flex-col"
-      key={getNegationId(negation)}
     >
       <p>{negation.negatedCard.name}</p>
       <p>{negation.priority}</p>
-    </div>
-  );
-};
-
-export const DraggableNegations = ({
-  negations,
-}: {
-  negations: GetNegationsReturnType;
-}) => {
-  const [items, setItems] = useState(negations);
-
-  const negatingCardName = negations[0].negatingCard.name;
-
-  const onDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over) return;
-
-    if (active.id === over.id) return;
-
-    setItems((items) => {
-      const oldIndex = items.findIndex(
-        (item) => getNegationId(item) === active.id
-      );
-      const newIndex = items.findIndex(
-        (item) => getNegationId(item) === over.id
-      );
-      return arrayMove(items, oldIndex, newIndex);
-    });
-  };
-
-  return (
-    <div className="bg-red-400 border-4 flex gap-4 border-white p-2">
-      <h1 className="bg-blue-600">{negatingCardName} negates: </h1>
-      <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
-        <SortableContext
-          items={items.map((item) => getNegationId(item))}
-          strategy={horizontalListSortingStrategy}
-        >
-          {items.map((negation) => (
-            <SortableNegation
-              key={getNegationId(negation)}
-              negation={negation}
-            />
-          ))}
-        </SortableContext>
-      </DndContext>
     </div>
   );
 };

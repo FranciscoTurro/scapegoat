@@ -5,6 +5,7 @@ import {
   getNegations,
 } from '../../../data-access/negations';
 import { DraggableNegations } from './draggable-negations';
+import { unstable_noStore } from 'next/cache';
 
 interface NegationsByNegatingCard {
   [negatingCardId: string]: GetNegationsReturnType;
@@ -21,12 +22,30 @@ const DeckNegatesPage = async ({
   const negationsByNegatingCard: NegationsByNegatingCard = {};
 
   negations.forEach((negation) => {
-    const negatingCardId = negation.negatingCardId;
-    if (!negationsByNegatingCard[negatingCardId]) {
-      negationsByNegatingCard[negatingCardId] = [];
+    if (!negationsByNegatingCard[negation.negatingCardId]) {
+      negationsByNegatingCard[negation.negatingCardId] = [];
     }
-    negationsByNegatingCard[negatingCardId].push(negation);
+    negationsByNegatingCard[negation.negatingCardId].push(negation);
   });
+
+  // Function to log the order of negations
+  const changePrio = async (order: GetNegationsReturnType) => {
+    'use server';
+
+    const newPrios = order.map((item, index) => {
+      return {
+        ...item,
+        priority: index + 1,
+      };
+    });
+
+    console.log(
+      `Negation Order for ${order[0].negatingCard.name}: `,
+      newPrios.map(
+        (order) => `${order.negatedCard.name} with prio ${order.priority}`
+      )
+    );
+  };
 
   return (
     <div>
@@ -38,16 +57,17 @@ const DeckNegatesPage = async ({
       >
         add negation
       </Link>
-      {Object.entries(negationsByNegatingCard).map(
-        ([negatingCardId, negationsForCard]) => {
-          return (
+      <div>
+        {Object.entries(negationsByNegatingCard).map(
+          ([negatingCardId, negationsForCard]) => (
             <DraggableNegations
               key={negatingCardId}
               negations={negationsForCard}
+              changePrio={changePrio} // Pass the log function as prop
             />
-          );
-        }
-      )}
+          )
+        )}
+      </div>
     </div>
   );
 };
