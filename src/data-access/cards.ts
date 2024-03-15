@@ -1,4 +1,13 @@
 import prisma from '../lib/db/db';
+import {
+  ASH_BLOSSOM_ID,
+  BELLE_ID,
+  CROW_ID,
+  GAMMA_ID,
+  IMPERM_ID,
+  OGRE_ID,
+  VEILER_ID,
+} from '../types/constants.d';
 
 export const getCardsInfo = async () => {
   return await prisma.card.findMany({
@@ -16,13 +25,13 @@ export const getNegatingCards = async () => {
     where: {
       id: {
         in: [
-          '14558127', //ash blossom
-          '10045474', //imperm
-          '97268402', //veiler
-          '38814750', //gamma
-          '59438930', //ogre
-          '73642296', //belle
-          '24508238', //crow
+          ASH_BLOSSOM_ID,
+          IMPERM_ID,
+          VEILER_ID,
+          GAMMA_ID,
+          OGRE_ID,
+          BELLE_ID,
+          CROW_ID,
         ],
       },
     },

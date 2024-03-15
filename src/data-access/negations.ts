@@ -1,5 +1,7 @@
 import prisma from '../lib/db/db';
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 
+export type GetNegationsReturnType = ThenArg<ReturnType<typeof getNegations>>;
 export const getNegations = async (deckId: string) => {
   return await prisma.negation.findMany({
     where: { deckId },

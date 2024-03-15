@@ -1,6 +1,14 @@
 import Link from 'next/link';
 import { getDeck } from '../../../data-access/decks';
-import { getNegations } from '../../../data-access/negations';
+import {
+  GetNegationsReturnType,
+  getNegations,
+} from '../../../data-access/negations';
+import { DraggableNegations } from './draggable-negations';
+
+interface NegationsByNegatingCard {
+  [negatingCardId: string]: GetNegationsReturnType;
+}
 
 const DeckNegatesPage = async ({
   params: { deckId },
@@ -9,6 +17,16 @@ const DeckNegatesPage = async ({
 }) => {
   const deck = await getDeck(deckId);
   const negations = await getNegations(deckId);
+
+  const negationsByNegatingCard: NegationsByNegatingCard = {};
+
+  negations.forEach((negation) => {
+    const negatingCardId = negation.negatingCardId;
+    if (!negationsByNegatingCard[negatingCardId]) {
+      negationsByNegatingCard[negatingCardId] = [];
+    }
+    negationsByNegatingCard[negatingCardId].push(negation);
+  });
 
   return (
     <div>
@@ -20,17 +38,16 @@ const DeckNegatesPage = async ({
       >
         add negation
       </Link>
-      {negations.map((negation) => (
-        <div
-          className="flex gap-2"
-          key={negation.negatingCardId + negation.negatedCardId}
-        >
-          <p>{negation.negatingCard.name}</p>
-          <p>negates</p>
-          <p>{negation.negatedCard.name}</p>
-          <p>{negation.priority}</p>
-        </div>
-      ))}
+      {Object.entries(negationsByNegatingCard).map(
+        ([negatingCardId, negationsForCard]) => {
+          return (
+            <DraggableNegations
+              key={negatingCardId}
+              negations={negationsForCard}
+            />
+          );
+        }
+      )}
     </div>
   );
 };
