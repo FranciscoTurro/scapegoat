@@ -36,3 +36,23 @@ export const createNegation = async (
     },
   });
 };
+
+export const updatePrio = async (newPrios: GetNegationsReturnType) => {
+  const deckId = newPrios[0].deckId;
+  const negatingCardId = newPrios[0].negatingCardId;
+
+  newPrios.forEach(async (item) => {
+    await prisma.negation.update({
+      where: {
+        negatingCardId_negatedCardId_deckId: {
+          deckId,
+          negatingCardId,
+          negatedCardId: item.negatedCardId,
+        },
+      },
+      data: {
+        priority: item.priority,
+      },
+    });
+  });
+};

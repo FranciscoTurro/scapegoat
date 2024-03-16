@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { DndContext, closestCorners } from '@dnd-kit/core';
+import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
 import {
   SortableContext,
   arrayMove,
@@ -8,57 +8,59 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Negation } from '@prisma/client';
 import { GetNegationsReturnType } from '../../../data-access/negations';
+import { updatePrioAction } from './_actions/updatePrioAction';
+import { getNegationId } from '../../../utils/utils';
 
 interface DraggableNegationsProps {
   negations: GetNegationsReturnType;
-  changePrio: (order: GetNegationsReturnType) => void;
 }
 
-const getNegationId = (negation: Negation) => {
-  return negation.negatedCardId + negation.negatingCardId + negation.deckId;
-};
+export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
+  const [negationsState, setNegationsState] = useState(negations);
+  const [loading, setLoading] = useState(false);
 
-export const DraggableNegations = ({
-  negations,
-  changePrio,
-}: DraggableNegationsProps) => {
-  const [items, setItems] = useState(negations);
-
-  const onDragEnd = (event: any) => {
+  const onDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over) return;
 
     if (active.id === over.id) return;
 
-    setItems((items) => {
-      const newOrder = arrayMove(
-        items,
-        items.findIndex((item) => getNegationId(item) === active.id),
-        items.findIndex((item) => getNegationId(item) === over.id)
-      );
-      changePrio(newOrder);
+    const newOrder = arrayMove(
+      negationsState,
+      negationsState.findIndex((item) => getNegationId(item) === active.id),
+      negationsState.findIndex((item) => getNegationId(item) === over.id)
+    );
 
-      return newOrder;
+    const newPrios = newOrder.map((item, index) => {
+      return {
+        ...item,
+        priority: index + 1,
+      };
+    });
+
+    setNegationsState(newPrios);
+    setLoading(true);
+
+    await updatePrioAction(newPrios).finally(() => {
+      setLoading(false);
     });
   };
 
   return (
     <div className="bg-red-400 border-4 flex gap-4 border-white p-2">
-      <h1 className="bg-blue-600">
-        {negations[0].negatingCard.name} negates:{' '}
-      </h1>
+      <h1 className="bg-blue-600">{negations[0].negatingCard.name} negates:</h1>
       <DndContext
         id={negations[0].negatingCardId}
-        collisionDetection={closestCorners}
+        collisionDetection={closestCenter}
         onDragEnd={onDragEnd}
       >
         <SortableContext
-          items={items.map((item) => getNegationId(item))}
+          disabled={loading}
+          items={negationsState.map((item) => getNegationId(item))}
           strategy={horizontalListSortingStrategy}
         >
-          {items.map((negation) => (
+          {negationsState.map((negation) => (
             <SortableNegation
               key={getNegationId(negation)}
               negation={negation}
@@ -73,7 +75,7 @@ export const DraggableNegations = ({
 const SortableNegation = ({
   negation,
 }: {
-  negation: GetNegationsReturnType[0];
+  negation: GetNegationsReturnType[number];
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({

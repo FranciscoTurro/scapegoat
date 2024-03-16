@@ -1,3 +1,4 @@
+import { Negation } from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -24,4 +25,8 @@ export const getErrorMessage = (error: unknown): string => {
 export const shortenDeckName = (name: string): string => {
   if (name.length >= 24) return name.substring(0, 21) + '...';
   else return name;
+};
+
+export const getNegationId = (negation: Negation) => {
+  return negation.negatedCardId + negation.negatingCardId + negation.deckId;
 };
