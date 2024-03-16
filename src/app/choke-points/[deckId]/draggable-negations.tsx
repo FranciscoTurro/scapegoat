@@ -7,10 +7,20 @@ import {
   horizontalListSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+
 import { CSS } from '@dnd-kit/utilities';
 import { GetNegationsReturnType } from '../../../data-access/negations';
 import { updatePrioAction } from './_actions/updatePrioAction';
 import { getNegationId } from '../../../utils/utils';
+import Image from 'next/image';
+import { ChevronRight, Navigation2Off } from 'lucide-react';
+import Link from 'next/link';
 
 interface DraggableNegationsProps {
   negations: GetNegationsReturnType;
@@ -48,8 +58,16 @@ export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
   };
 
   return (
-    <div className="bg-red-400 border-4 flex gap-4 border-white p-2">
-      <h1 className="bg-blue-600">{negations[0].negatingCard.name} negates:</h1>
+    <div className="bg-background border-2 rounded mx-10 flex border-border gap-4 p-2">
+      <Image
+        src={negations[0].negatingCard.small_image_path}
+        width={80}
+        height={80}
+        alt={`${negations[0].negatingCard.name}`}
+      />
+      <div className="flex items-center mr-4 ml-1">
+        <Navigation2Off className="rotate-90" size={50} />
+      </div>
       <DndContext
         id={negations[0].negatingCardId}
         collisionDetection={closestCenter}
@@ -60,12 +78,15 @@ export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
           items={negationsState.map((item) => getNegationId(item))}
           strategy={horizontalListSortingStrategy}
         >
-          {negationsState.map((negation) => (
-            <SortableNegation
-              key={getNegationId(negation)}
-              negation={negation}
-            />
-          ))}
+          {negationsState.map((negation, index) => {
+            return (
+              <SortableNegation
+                isFirst={index == 0}
+                key={getNegationId(negation)}
+                negation={negation}
+              />
+            );
+          })}
         </SortableContext>
       </DndContext>
     </div>
@@ -73,8 +94,10 @@ export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
 };
 
 const SortableNegation = ({
+  isFirst,
   negation,
 }: {
+  isFirst: boolean;
   negation: GetNegationsReturnType[number];
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -88,15 +111,33 @@ const SortableNegation = ({
   };
 
   return (
-    <div
-      style={style}
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      className="flex flex-col"
-    >
-      <p>{negation.negatedCard.name}</p>
-      <p>{negation.priority}</p>
+    <div className="flex items-center gap-3">
+      <div className="items-center flex">
+        {isFirst ? null : <ChevronRight />}
+      </div>
+      <div
+        className="flex flex-col w-20 h-20"
+        style={style}
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+      >
+        <TooltipProvider>
+          <Tooltip delayDuration={250}>
+            <TooltipTrigger>
+              <Image
+                src={negation.negatedCard.small_image_path}
+                width={60}
+                height={60}
+                alt={`${negation.negatedCard.name}`}
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{negation.negatedCard.name}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>
   );
 };

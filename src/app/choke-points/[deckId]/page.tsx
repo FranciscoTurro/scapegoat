@@ -5,8 +5,6 @@ import {
   getNegations,
 } from '../../../data-access/negations';
 import { DraggableNegations } from './draggable-negations';
-import { updatePrioAction } from './_actions/updatePrioAction';
-import { useFormStatus } from 'react-dom';
 
 interface NegationsByNegatingCard {
   [negatingCardId: string]: GetNegationsReturnType;
@@ -33,13 +31,16 @@ const DeckNegatesPage = async ({
     <div>
       <p>{deck?.name}</p>
       <p>{deck?.cover_card.name}</p>
+      <p className="text-white/70 text-sm">
+        You can hover over the card to see it&apos;s name
+      </p>
       <Link
         className="bg-red-200"
         href={`/choke-points/${deckId}/add-negation`}
       >
         add negation
       </Link>
-      <form>
+      <div className="flex flex-col gap-1">
         {Object.entries(negationsByNegatingCard).map(
           ([negatingCardId, negationsForCard]) => (
             <DraggableNegations
@@ -48,7 +49,7 @@ const DeckNegatesPage = async ({
             />
           )
         )}
-      </form>
+      </div>
     </div>
   );
 };
