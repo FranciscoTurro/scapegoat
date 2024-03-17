@@ -35,6 +35,7 @@ export const getNegatingCards = async () => {
         ],
       },
     },
+    orderBy: { name: 'asc' },
   });
 };
 

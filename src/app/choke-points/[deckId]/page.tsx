@@ -5,6 +5,9 @@ import {
   getNegations,
 } from '../../../data-access/negations';
 import { DraggableNegations } from './draggable-negations';
+import { Button } from '../../../components/ui/button';
+import { auth } from '../../../lib/auth/auth';
+import Image from 'next/image';
 
 interface NegationsByNegatingCard {
   [negatingCardId: string]: GetNegationsReturnType;
@@ -15,6 +18,10 @@ const DeckNegatesPage = async ({
 }: {
   params: { deckId: string };
 }) => {
+  const session = await auth();
+  const authorizedUser =
+    session && session.user && session.user.role == 'admin';
+
   const deck = await getDeck(deckId);
   const deckNegations = await getNegations(deckId);
 
@@ -28,19 +35,27 @@ const DeckNegatesPage = async ({
   });
 
   return (
-    <div>
-      <p>{deck?.name}</p>
-      <p>{deck?.cover_card.name}</p>
-      <p className="text-white/70 text-sm">
-        You can hover over the card to see it&apos;s name
-      </p>
-      <Link
-        className="bg-red-200"
-        href={`/choke-points/${deckId}/add-negation`}
-      >
-        add negation
-      </Link>
-      <div className="flex flex-col gap-1">
+    <div className="flex flex-col">
+      <div className="py-5 flex flex-col items-center">
+        <h1 className="text-3xl font-bold">{deck?.name}</h1>
+        <div className="container px-20 flex justify-between w-full">
+          {authorizedUser ? (
+            <Link
+              className="mx-48"
+              href={`/choke-points/${deckId}/add-negation`}
+            >
+              <Button className="font-bold" variant="ghost">
+                Add negation
+              </Button>
+            </Link>
+          ) : null}
+          <p className="text-white/70 flex items-center text-sm">
+            You can hover over cards to see their name
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col w-full gap-1">
         {Object.entries(negationsByNegatingCard).map(
           ([negatingCardId, negationsForCard]) => (
             <DraggableNegations

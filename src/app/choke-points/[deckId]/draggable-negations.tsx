@@ -137,6 +137,7 @@ const SortableNegation = ({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+        <p>{negation.comment}</p>
       </div>
     </div>
   );

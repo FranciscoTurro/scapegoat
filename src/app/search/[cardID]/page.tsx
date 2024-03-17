@@ -7,6 +7,22 @@ import { Level } from './_components/level';
 import { LinkVal } from './_components/linkval';
 import { Typing } from './_components/typing';
 import { Type } from './_components/type';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  params: { cardId },
+}: {
+  params: { cardId: string };
+}): Promise<Metadata> {
+  const card = await getCard(cardId);
+
+  return {
+    title: {
+      absolute: card!.name ?? 'Scapegoat',
+      default: 'Scapegoat',
+    },
+  };
+}
 
 const CardPage = async ({
   params: { cardId },
