@@ -22,7 +22,7 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
     .split('\\n')
     .map((str) => <p key={str}>{str}</p>); //would love a cleaner solution
 
-  const handleClick = (card: Card) => {
+  const handleRightClick = (card: Card) => {
     setSelectedCard(card);
   };
 
@@ -44,10 +44,12 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
                 key={index}
                 onContextMenu={(e) => {
                   e.preventDefault();
-                  setState(state.filter((card) => card !== cardId));
+                  const isCardSelected = selectedCard?.id == cardId;
+                  if (isCardSelected) setSelectedCard(undefined);
+                  setState(state.filter((_, secIndex) => secIndex !== index));
                 }}
                 onClick={() => {
-                  handleClick(card);
+                  handleRightClick(card);
                 }}
               >
                 <Image
@@ -63,9 +65,9 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
           <p>No cards on the hand!</p>
         )}
       </div>
-      <div className="pt-12">
+      <div className="pt-20">
         {selectedCard ? (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex justify-center gap-2">
             <Image
               className="border-2 border-white"
               src={selectedCard.full_image_path}
@@ -73,7 +75,10 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
               width={200}
               alt={selectedCard.name}
             />
-            <div className="w-1/3">{descriptionWithLineBreaks}</div>
+            <div className="w-1/3">
+              <div className="font-bold text-2xl">{selectedCard.name}</div>
+              <div>{selectedCard.desc}</div>
+            </div>
           </div>
         ) : null}
       </div>
