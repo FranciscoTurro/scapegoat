@@ -2,7 +2,7 @@
 
 import { Card } from '@prisma/client';
 import { CardInfo } from '../../types/CardInfo';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { SetArraySearchbar } from './_components/set-array-searchbar';
 import Image from 'next/image';
 
@@ -22,6 +22,10 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
     .split('\\n')
     .map((str) => <p key={str}>{str}</p>); //would love a cleaner solution
 
+  const handleClick = (card: Card) => {
+    setSelectedCard(card);
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="container px-20 w-full mx-auto flex flex-col items-center justify-center h-16 my-2">
@@ -29,27 +33,35 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
           <SetArraySearchbar setter={setState} state={state} cards={cardInfo} />
         </div>
       </div>
-      <div className="pt-12 mx-10 flex flex-wrap gap-4">
-        {state!
-          ? state.map((cardId, index) => {
-              const card = cards.find((card) => cardId === card.id);
-              if (!card) return;
-              return (
-                <div
-                  className="cursor-pointer"
-                  key={index}
-                  onClick={() => setSelectedCard(card)}
-                >
-                  <Image
-                    src={card?.full_image_path}
-                    height={150}
-                    width={150}
-                    alt={card.name}
-                  />
-                </div>
-              );
-            })
-          : null}
+      <div className="pt-8 mx-10 flex flex-wrap gap-4">
+        {state.length > 0 ? (
+          state.map((cardId, index) => {
+            const card = cards.find((card) => cardId === card.id);
+            if (!card) return;
+            return (
+              <div
+                className="cursor-pointer"
+                key={index}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  setState(state.filter((card) => card !== cardId));
+                }}
+                onClick={() => {
+                  handleClick(card);
+                }}
+              >
+                <Image
+                  src={card?.full_image_path}
+                  height={150}
+                  width={150}
+                  alt={card.name}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <p>No cards on the hand!</p>
+        )}
       </div>
       <div className="pt-12">
         {selectedCard ? (
@@ -61,7 +73,7 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
               width={200}
               alt={selectedCard.name}
             />
-            <p className="w-1/3">{descriptionWithLineBreaks}</p>
+            <div className="w-1/3">{descriptionWithLineBreaks}</div>
           </div>
         ) : null}
       </div>
