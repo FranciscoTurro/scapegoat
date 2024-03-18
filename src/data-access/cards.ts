@@ -20,6 +20,10 @@ export const getCard = async (id: string) => {
   return await prisma.card.findFirst({ where: { id } });
 };
 
+export const getCards = async () => {
+  return await prisma.card.findMany();
+};
+
 export const getNegatingCards = async () => {
   return await prisma.card.findMany({
     where: {

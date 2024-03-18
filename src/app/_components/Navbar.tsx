@@ -1,6 +1,6 @@
 'use client';
 
-import { Joystick, Search, ShieldX } from 'lucide-react';
+import { Hand, Joystick, Search, ShieldX } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import page_icon from '../../../public/scapegoat_icon.png';
@@ -12,6 +12,7 @@ export const Navbar = ({}) => {
   const isCombos = pathname.includes('/combos');
   const isChokePoints = pathname.includes('/choke-points');
   const isSearch = pathname.includes('/search');
+  const isHand = pathname.includes('/hand-simulator');
 
   return (
     <nav className="border-b border-border">
@@ -71,6 +72,22 @@ export const Navbar = ({}) => {
               <span>Search cards</span>
             </div>
             {isSearch ? (
+              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
+            ) : null}
+          </Link>
+          <Link
+            className="h-full relative flex items-center whitespace-nowrap"
+            href="/hand-simulator"
+          >
+            <div
+              className={`${
+                isHand ? 'text-white' : 'text-gray-400'
+              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
+            >
+              <Hand />
+              <span>Hand simulator</span>
+            </div>
+            {isHand ? (
               <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
             ) : null}
           </Link>
