@@ -24,6 +24,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Choke points - Scapegoat',
+};
 
 const ChokePage = async ({
   searchParams,

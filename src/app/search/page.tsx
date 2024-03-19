@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Card search - Scapegoat',
+};
+
 const SearchPage = async () => {
   return (
     <div className="mx-auto w-full container px-4 lg:px-20 pt-0">

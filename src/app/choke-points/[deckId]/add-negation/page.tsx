@@ -4,6 +4,22 @@ import { getCardsInfo, getNegatingCards } from '../../../../data-access/cards';
 import { auth } from '../../../../lib/auth/auth';
 import { getDeck } from '../../../../data-access/decks';
 import { getNegations } from '../../../../data-access/negations';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  params: { deckId },
+}: {
+  params: { deckId: string };
+}): Promise<Metadata> {
+  const deck = await getDeck(deckId);
+
+  return {
+    title: {
+      absolute: deck!.name + ' - Scapegoat' ?? 'Scapegoat',
+      default: 'Scapegoat',
+    },
+  };
+}
 
 const NegationPage = async ({
   params: { deckId },

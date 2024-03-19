@@ -18,7 +18,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      absolute: card!.name ?? 'Scapegoat',
+      absolute: card!.name + ' - Scapegoat' ?? 'Scapegoat',
       default: 'Scapegoat',
     },
   };

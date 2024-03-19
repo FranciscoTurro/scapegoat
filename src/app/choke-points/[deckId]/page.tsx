@@ -7,7 +7,22 @@ import {
 import { DraggableNegations } from './draggable-negations';
 import { Button } from '../../../components/ui/button';
 import { auth } from '../../../lib/auth/auth';
-import Image from 'next/image';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  params: { deckId },
+}: {
+  params: { deckId: string };
+}): Promise<Metadata> {
+  const deck = await getDeck(deckId);
+
+  return {
+    title: {
+      absolute: deck!.name + ' choke points - Scapegoat' ?? 'Scapegoat',
+      default: 'Scapegoat',
+    },
+  };
+}
 
 interface NegationsByNegatingCard {
   [negatingCardId: string]: GetNegationsReturnType;

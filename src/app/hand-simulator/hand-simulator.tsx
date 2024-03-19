@@ -77,7 +77,7 @@ export const HandSimulator = ({ cards }: { cards: Card[] }) => {
             />
             <div className="w-1/3">
               <div className="font-bold text-2xl">{selectedCard.name}</div>
-              <div>{selectedCard.desc}</div>
+              <div>{descriptionWithLineBreaks}</div>
             </div>
           </div>
         ) : null}
