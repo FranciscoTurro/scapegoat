@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { createComboAction } from '../create-combo/_actions/create-combo-action';
 import { Switch } from '../../../components/ui/switch';
 import { Label } from '../../../components/ui/label';
+import { Tiptap } from './tiptap';
 
 export const ComboWizard = ({
   cards,
@@ -17,6 +18,7 @@ export const ComboWizard = ({
 }) => {
   const [error, setError] = useState('');
   const [isPublic, setIsPublic] = useState(true);
+  const [value, setValue] = useState('');
 
   const clientAction = async (formData: FormData) => {
     const result = await createComboAction(formData);
@@ -43,6 +45,8 @@ export const ComboWizard = ({
           />
           <Label htmlFor="public">Public combo</Label>
         </div>
+        <Tiptap setter={setValue} />
+        <div>{value}</div>
         {error ? (
           <div className="font-semibold text-red-500">{error}</div>
         ) : null}
