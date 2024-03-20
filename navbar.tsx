@@ -61,22 +61,6 @@ export const Navbar = ({}) => {
           </Link>
           <Link
             className="h-full relative flex items-center whitespace-nowrap"
-            href="/search"
-          >
-            <div
-              className={`${
-                isSearch ? 'text-white' : 'text-gray-400'
-              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
-            >
-              <Search />
-              <span>Search cards</span>
-            </div>
-            {isSearch ? (
-              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
-            ) : null}
-          </Link>
-          <Link
-            className="h-full relative flex items-center whitespace-nowrap"
             href="/hand-simulator"
           >
             <div
@@ -88,6 +72,22 @@ export const Navbar = ({}) => {
               <span>Hand simulator</span>
             </div>
             {isHand ? (
+              <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
+            ) : null}
+          </Link>
+          <Link
+            className="h-full relative flex items-center whitespace-nowrap"
+            href="/search"
+          >
+            <div
+              className={`${
+                isSearch ? 'text-white' : 'text-gray-400'
+              } font-medium relative text-sm p-2 flex flex-row items-center space-x-2 hover:text-white rounded-md duration-200 hover:bg-accent/30`}
+            >
+              <Search />
+              <span>Search cards</span>
+            </div>
+            {isSearch ? (
               <span className="w-full h-0.5 bg-white absolute bottom-0 left-0 rounded-full"></span>
             ) : null}
           </Link>

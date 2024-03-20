@@ -74,6 +74,7 @@ const DeckNegatesPage = async ({
         {Object.entries(negationsByNegatingCard).map(
           ([negatingCardId, negationsForCard]) => (
             <DraggableNegations
+              isAuth={authorizedUser ?? false}
               key={negatingCardId}
               negations={negationsForCard}
             />

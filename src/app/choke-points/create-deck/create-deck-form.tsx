@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { CardInfo } from '../../../types/CardInfo';
 import { SetCardSearchbar } from '../../_components/set-card-searchbar';
-import { createDeckAction } from './_actions/createDeckAction';
+import { createDeckAction } from './_actions/create-deck-action';
 import { Input } from '../../../components/ui/input';
 
 export const CreateDeckForm: React.FC<{ cards: CardInfo[] }> = ({ cards }) => {

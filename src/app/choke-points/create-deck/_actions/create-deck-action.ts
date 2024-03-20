@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache';
 import { CardInfo } from '../../../../types/CardInfo';
 import { auth } from '../../../../lib/auth/auth';
-import prisma from '../../../../lib/db/db';
 import { redirect } from 'next/navigation';
 import { getErrorMessage } from '../../../../utils/utils';
 import { createDeck } from '../../../../data-access/decks';

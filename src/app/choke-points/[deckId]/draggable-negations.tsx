@@ -16,17 +16,20 @@ import {
 
 import { CSS } from '@dnd-kit/utilities';
 import { GetNegationsReturnType } from '../../../data-access/negations';
-import { updatePrioAction } from './_actions/updatePrioAction';
+import { updatePrioAction } from './_actions/update-prio-action';
 import { getNegationId } from '../../../utils/utils';
 import Image from 'next/image';
 import { ChevronRight, Navigation2Off } from 'lucide-react';
-import Link from 'next/link';
 
 interface DraggableNegationsProps {
   negations: GetNegationsReturnType;
+  isAuth: boolean;
 }
 
-export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
+export const DraggableNegations = ({
+  negations,
+  isAuth,
+}: DraggableNegationsProps) => {
   const [negationsState, setNegationsState] = useState(negations);
   const [loading, setLoading] = useState(false);
 
@@ -74,7 +77,7 @@ export const DraggableNegations = ({ negations }: DraggableNegationsProps) => {
         onDragEnd={onDragEnd}
       >
         <SortableContext
-          disabled={loading}
+          disabled={loading || isAuth == false}
           items={negationsState.map((item) => getNegationId(item))}
           strategy={horizontalListSortingStrategy}
         >
