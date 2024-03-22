@@ -12,7 +12,12 @@
     }
     ul,
     ol {
-      padding: 0 1.2em;
+      padding: 0 1.7em;
+    }
+  }
+  .no_focus {
+    &:focus {
+      outline: none;
     }
   }
 }

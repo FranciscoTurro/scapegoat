@@ -13,16 +13,8 @@ model Combo {
   userId     String
   name       String
   cards_used Card[]
-  steps      Step[]
   public     Boolean @default(true)
-}
-
-model Step {
-  id          String  @id @default(cuid())
-  Combo       Combo?  @relation(fields: [comboId], references: [id])
-  comboId     String?
-  content     String
-  observation String?
+  content    String
 }
 
 model Card {

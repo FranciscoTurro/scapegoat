@@ -32,20 +32,23 @@ export const ComboWizard = ({
     <div className="pt-16 flex flex-col w-full items-center justify-center">
       <form
         action={clientAction}
-        className="w-1/4 flex flex-col gap-3 items-start"
+        className="w-1/2 flex flex-col gap-3 items-start"
       >
         <div className="font-semibold">Name</div>
         <Input name="name" />
-        <Button type="submit">Submit combo</Button>
-        <div className="flex items-center space-x-2">
-          <Switch
-            checked={isPublic}
-            onCheckedChange={(e) => setIsPublic(e.valueOf())}
-            id="public"
-          />
-          <Label htmlFor="public">Public combo</Label>
-        </div>
+        <div className="font-semibold">Combo</div>
         <Tiptap setter={setValue} />
+        <div className="flex gap-10 justify-between w-full items-center">
+          <Button type="submit">Submit combo</Button>
+          <div className="flex flex-col gap-1 items-center">
+            <Label htmlFor="public">Public</Label>
+            <Switch
+              checked={isPublic}
+              onCheckedChange={(e) => setIsPublic(e.valueOf())}
+              id="public"
+            />
+          </div>
+        </div>
         <div>{value}</div>
         {error ? (
           <div className="font-semibold text-red-500">{error}</div>
