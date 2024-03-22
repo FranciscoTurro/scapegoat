@@ -4,16 +4,18 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
 import Underline from '@tiptap/extension-underline';
 import Text from '@tiptap/extension-text';
-import { EditorContent, useEditor } from '@tiptap/react';
-import { Dispatch, SetStateAction } from 'react';
+import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import Bold from '@tiptap/extension-bold';
 import { Toggle } from '../../../components/ui/toggle';
 import { Bold as BoldIcon, Underline as UnderlineIcon } from 'lucide-react';
 
 export const Tiptap = ({
   setter,
+  value,
 }: {
   setter: Dispatch<SetStateAction<string>>;
+  value: string;
 }) => {
   const editor = useEditor({
     editorProps: {
@@ -41,9 +43,14 @@ export const Tiptap = ({
       if (!editor.isActive('orderedList')) {
         editor.commands.toggleOrderedList();
       }
-      setter(JSON.stringify(editor.getJSON().content));
+      const value = JSON.stringify(editor.getJSON().content);
+      setter(value);
     },
   });
+
+  useEffect(() => {
+    editor?.commands.setContent(JSON.parse(value) as string);
+  }, [value, editor]);
 
   if (!editor) {
     return null;

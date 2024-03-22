@@ -1,9 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { auth } from '../../../../lib/auth/auth';
+import { auth } from '../lib/auth/auth';
 import { redirect } from 'next/navigation';
-import { getErrorMessage } from '../../../../utils/utils';
+import { getErrorMessage } from '../utils/utils';
 
 export const createComboAction = async (formData: FormData) => {
   const session = await auth();

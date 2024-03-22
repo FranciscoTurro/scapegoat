@@ -1,11 +1,11 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { CardInfo } from '../../../../types/CardInfo';
-import { auth } from '../../../../lib/auth/auth';
+import { CardInfo } from '../types/CardInfo';
+import { auth } from '../lib/auth/auth';
 import { redirect } from 'next/navigation';
-import { getErrorMessage } from '../../../../utils/utils';
-import { createDeck } from '../../../../data-access/decks';
+import { getErrorMessage } from '../utils/utils';
+import { createDeck } from '../data-access/decks';
 
 export const createDeckAction = async (
   coverCard: CardInfo,

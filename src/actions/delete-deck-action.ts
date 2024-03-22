@@ -1,9 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { auth } from '../../../lib/auth/auth';
-import { deleteDeck } from '../../../data-access/decks';
-import { getErrorMessage } from '../../../utils/utils';
+import { auth } from '../lib/auth/auth';
+import { deleteDeck } from '../data-access/decks';
+import { getErrorMessage } from '../utils/utils';
 
 export const deleteDeckAction = async (id: string) => {
   const session = await auth();

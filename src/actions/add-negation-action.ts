@@ -1,16 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { auth } from '../../../../../lib/auth/auth';
-import { CardInfo } from '../../../../../types/CardInfo';
-import prisma from '../../../../../lib/db/db';
+import { auth } from '../lib/auth/auth';
+import { CardInfo } from '../types/CardInfo';
+import prisma from '../lib/db/db';
 import { redirect } from 'next/navigation';
-import { getErrorMessage } from '../../../../../utils/utils';
-import {
-  createNegation,
-  getNegatedByCards,
-} from '../../../../../data-access/negations';
-import { getNegatingCards } from '../../../../../data-access/cards';
+import { getErrorMessage } from '../utils/utils';
+import { createNegation, getNegatedByCards } from '../data-access/negations';
+import { getNegatingCards } from '../data-access/cards';
 
 export const addNegationAction = async (
   negatingCard: CardInfo,

@@ -1,12 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import {
-  GetNegationsReturnType,
-  updatePrio,
-} from '../../../../data-access/negations';
-import { getErrorMessage } from '../../../../utils/utils';
-import { auth } from '../../../../lib/auth/auth';
+import { GetNegationsReturnType, updatePrio } from '../data-access/negations';
+import { getErrorMessage } from '../utils/utils';
+import { auth } from '../lib/auth/auth';
 
 export const updatePrioAction = async (newPrios: GetNegationsReturnType) => {
   const session = await auth();

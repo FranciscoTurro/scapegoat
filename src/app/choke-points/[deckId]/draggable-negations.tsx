@@ -16,7 +16,7 @@ import {
 
 import { CSS } from '@dnd-kit/utilities';
 import { GetNegationsReturnType } from '../../../data-access/negations';
-import { updatePrioAction } from './_actions/update-prio-action';
+import { updatePrioAction } from '../../../actions/update-prio-action';
 import { getNegationId } from '../../../utils/utils';
 import Image from 'next/image';
 import { ChevronRight, Navigation2Off } from 'lucide-react';
