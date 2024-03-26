@@ -11,7 +11,8 @@ const CreateComboPage = async () => {
 
   return (
     <div>
-      <ComboWizard cards={cards} />
+      <ComboWizard cards={cards} />{' '}
+      {/*CAN do read only https://tiptap.dev/docs/editor/guide/output*/}
     </div>
   );
 };

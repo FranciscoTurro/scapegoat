@@ -29,12 +29,12 @@ export const Tiptap = ({
       Paragraph,
       Text,
       Bold,
+      ListItem,
       OrderedList.configure({
         HTMLAttributes: {
           class: 'list-decimal',
         },
       }),
-      ListItem,
     ],
     onCreate: ({ editor }) => {
       editor.commands.toggleOrderedList();

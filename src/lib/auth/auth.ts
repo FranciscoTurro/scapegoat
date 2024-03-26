@@ -21,6 +21,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     session({ user, session }) {
       session.user!.role = user.role;
+      session.user!.id = user.id;
       return session;
     },
   },
