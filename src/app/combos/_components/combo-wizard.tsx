@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Combo } from '@prisma/client';
+import { Combo } from '@prisma/client';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { useState } from 'react';
@@ -8,12 +8,14 @@ import { createComboAction } from '../../../actions/create-combo-action';
 import { Switch } from '../../../components/ui/switch';
 import { Label } from '../../../components/ui/label';
 import { Tiptap } from './tiptap';
+import { ComboWizardCards } from './combo-wizard-cards';
+import { GetCardsInfoType } from '../../../data-access/cards';
 
 export const ComboWizard = ({
   cards,
   combo,
 }: {
-  cards: Card[];
+  cards: GetCardsInfoType;
   combo?: Combo;
 }) => {
   const [error, setError] = useState('');
@@ -28,23 +30,22 @@ export const ComboWizard = ({
     }
   };
 
-  const appendTextToLast = (value: any) => {
+  const appendTextToLast = (value: any, name: string) => {
     const currentValue = JSON.parse(value);
-    currentValue[0].content[
-      currentValue[0].content.length - 1
-    ].content[0].content[
+    const lastValue =
       currentValue[0].content[currentValue[0].content.length - 1].content[0]
-        .content.length - 1
-    ].text += 'HELLOFRIEND';
+        .content;
+    if (lastValue == undefined) return;
+    lastValue[lastValue.length - 1].text += ' ' + name;
     setValue(JSON.stringify(currentValue));
   }; //single worst piece of code i have written in my entire life. its hacky, unreadable, fragile, doesnt
   //follow one clean code axiom..... im almost proud of it
 
   return (
-    <div className="pt-16 flex flex-col w-full items-center justify-center">
+    <div className="pt-16 flex w-full justify-center">
       <form
         action={clientAction}
-        className="w-1/2 flex flex-col gap-3 items-start"
+        className="w-1/2 mb-32 flex flex-col gap-3 items-start"
       >
         <div className="font-semibold">Name</div>
         <Input name="name" />
@@ -62,13 +63,16 @@ export const ComboWizard = ({
           </div>
         </div>
         <div>{value}</div>
-        <Button onClick={() => appendTextToLast(value)} type="button">
-          testing
-        </Button>
         {error ? (
           <div className="font-semibold text-red-500">{error}</div>
         ) : null}
       </form>
+      <ComboWizardCards
+        onCardClick={(name: string) => {
+          appendTextToLast(value, name);
+        }}
+        cards={cards}
+      />
     </div>
   );
 };

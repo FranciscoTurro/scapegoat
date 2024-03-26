@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getCards } from '../../../data-access/cards';
+import { getCardsInfo } from '../../../data-access/cards';
 import { ComboWizard } from '../_components/combo-wizard';
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const CreateComboPage = async () => {
-  const cards = await getCards();
+  const cards = await getCardsInfo();
 
   return (
     <div>

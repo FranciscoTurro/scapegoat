@@ -8,7 +8,9 @@ import {
   OGRE_ID,
   VEILER_ID,
 } from '../types/constants.d';
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 
+export type GetCardsInfoType = ThenArg<ReturnType<typeof getCardsInfo>>;
 export const getCardsInfo = async () => {
   return await prisma.card.findMany({
     select: { name: true, id: true, small_image_path: true },

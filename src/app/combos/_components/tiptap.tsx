@@ -4,7 +4,7 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
 import Underline from '@tiptap/extension-underline';
 import Text from '@tiptap/extension-text';
-import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import Bold from '@tiptap/extension-bold';
 import { Toggle } from '../../../components/ui/toggle';
