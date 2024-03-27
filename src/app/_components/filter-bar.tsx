@@ -1,11 +1,11 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Input } from '../../../components/ui/input';
+import { Input } from '../../components/ui/input';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search } from 'lucide-react';
 
-export const FilterBar = () => {
+export const FilterBar = ({ placeholder }: { placeholder: string }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -31,7 +31,7 @@ export const FilterBar = () => {
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
-          placeholder="Filter decks by name..."
+          placeholder={placeholder}
           className="rounded-md border-border focus:border-white flex h-10 border-2 bg-background px-3 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-3 py-2 text-md w-full"
         />
       </div>

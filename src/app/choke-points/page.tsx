@@ -4,8 +4,8 @@ import { auth } from '../../lib/auth/auth';
 import { getDecksPaginated } from '../../data-access/decks';
 import PaginationComponent from '../_components/pagination-component';
 import Image from 'next/image';
-import { FilterBar } from './_components/filter-bar';
-import { shortenDeckName } from '../../utils/utils';
+import { FilterBar } from '../_components/filter-bar';
+import { shortenName } from '../../utils/utils';
 import {
   Popover,
   PopoverContent,
@@ -25,6 +25,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Metadata } from 'next';
+import { Badge } from '../../components/ui/badge';
 
 export const metadata: Metadata = {
   title: 'Choke points - Scapegoat',
@@ -51,7 +52,7 @@ const ChokePage = async ({
 
   return (
     <div className="h-full">
-      <FilterBar />
+      <FilterBar placeholder="Filter decks by name..." />
       {authorizedUser ? (
         <div className="container px-20 w-full">
           <Link className="mx-48" href="choke-points/create-deck">
@@ -75,7 +76,10 @@ const ChokePage = async ({
                     src={deck.cover_card.small_image_path}
                     alt={`${deck.name}'s cover card`}
                   />
-                  <p className="font-semibold">{shortenDeckName(deck.name)}</p>
+                  <div>
+                    <p className="font-semibold">{shortenName(deck.name)}</p>
+                    <Badge variant="destructive">Deck</Badge>
+                  </div>
                 </div>
               </Link>
               {authorizedUser ? (

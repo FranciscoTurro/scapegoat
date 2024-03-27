@@ -22,7 +22,7 @@ export const getErrorMessage = (error: unknown): string => {
   return message;
 };
 
-export const shortenDeckName = (name: string): string => {
+export const shortenName = (name: string): string => {
   if (name.length >= 24) return name.substring(0, 21) + '...';
   else return name;
 };

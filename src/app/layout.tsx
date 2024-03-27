@@ -4,6 +4,7 @@ import SessionProvider from '@/lib/auth/session-provider';
 import { Inter } from 'next/font/google';
 import { auth } from '../lib/auth/auth';
 import { Navbar } from './_components/navbar';
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata: Metadata = {
   title: 'Scapegoat',
@@ -26,6 +27,7 @@ const RootLayout = async ({
   return (
     <html lang="en">
       <body>
+        <NextTopLoader color="#ffff" />
         <SessionProvider session={session}>
           <Navbar />
           <main className={`${inter.variable} flex w-full flex-1 flex-col`}>
